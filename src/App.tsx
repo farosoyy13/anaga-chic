@@ -2,24 +2,26 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './Login';
 import Home from './Home';
+import About from './About';
 import OwnerRoom from './OwnerRoom';
 
 export default function App() {
-  // مؤقتاً: false تعني أن الزائر سيُحول لصفحة Login إجبارياً
-  const isLoggedIn = false; 
+  const isLoggedIn = false; // ستتحكم بهذا لاحقاً عبر نظام تسجيل الدخول
 
   return (
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
         
-        {/* حماية الموقع: لا يمكن الدخول لأي صفحة إلا بعد تسجيل الدخول */}
+        {/* المسارات المحمية */}
         <Route 
-          path="/*" 
+          path="/" 
           element={isLoggedIn ? <Home /> : <Navigate to="/login" />} 
         />
-        
+        <Route path="/about" element={<About />} />
         <Route path="/owner-room" element={<OwnerRoom />} />
+        
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );
