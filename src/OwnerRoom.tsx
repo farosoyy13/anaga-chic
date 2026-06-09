@@ -15,7 +15,6 @@ export default function OwnerRoom({ onClose }: { onClose: () => void }) {
       <div style={{ border: '1px solid #333', padding: '15px', borderRadius: '10px' }}>
         <h3 style={{ borderBottom: '1px solid #d4af37' }}>لوحة التحكم والشكاوى</h3>
         <p>استقبل هنا شكاوى الموظفين والزوار. كل ما يرد هنا مشفر ومحجوب عن الجميع.</p>
-        {/* هنا ستظهر الرسائل لاحقاً بعد ربط قاعدة البيانات */}
         <div style={{ padding: '20px', textAlign: 'center', color: '#555' }}>لا توجد شكاوى حالياً - النظام يعمل بكفاءة</div>
       </div>
     </div>
