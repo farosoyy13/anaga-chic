@@ -6,21 +6,28 @@ import About from './About';
 import OwnerRoom from './OwnerRoom';
 
 export default function App() {
-  const isLoggedIn = false; // ستتحكم بهذا لاحقاً عبر نظام تسجيل الدخول
+  // متغير التحكم بحالة الدخول - سيتم ربطه لاحقاً بنظام المصادقة
+  const isLoggedIn = false; 
 
   return (
     <Router>
       <Routes>
+        {/* صفحة تسجيل الدخول */}
         <Route path="/login" element={<Login />} />
         
-        {/* المسارات المحمية */}
+        {/* المسارات الرئيسية المحمية */}
         <Route 
           path="/" 
           element={isLoggedIn ? <Home /> : <Navigate to="/login" />} 
         />
-        <Route path="/about" element={<About />} />
-        <Route path="/owner-room" element={<OwnerRoom />} />
         
+        {/* صفحة التعريف والتواصل */}
+        <Route path="/about" element={isLoggedIn ? <About /> : <Navigate to="/login" />} />
+        
+        {/* غرفة العمليات الخاصة بالمالك */}
+        <Route path="/owner-room" element={isLoggedIn ? <OwnerRoom /> : <Navigate to="/login" />} />
+        
+        {/* توجيه أي مسار غير معروف إلى الصفحة الرئيسية */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
