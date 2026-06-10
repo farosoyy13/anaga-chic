@@ -1,9 +1,9 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { getAnalytics } from "firebase/analytics";
+import { getAnalytics, isSupported } from "firebase/analytics";
 
-// إعدادات Firebase الخاصة بمشروعك
+// إعدادات Firebase الخاصة بمشروعك "أناقة CHIC"
 const firebaseConfig = {
   apiKey: "AIzaSyCK8IWcEV_z9DXj0YKq8IjObm1AzEJsjgE",
   authDomain: "anaqachic-5.firebaseapp.com",
@@ -17,7 +17,14 @@ const firebaseConfig = {
 // تهيئة Firebase
 const app = initializeApp(firebaseConfig);
 
-// تصدير الأدوات اللازمة للمشروع
+// تهيئة الأدوات
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-export const analytics = getAnalytics(app);
+
+// تهيئة التحليلات مع التحقق من الدعم (لضمان استقرار الموقع)
+export let analytics: any = null;
+isSupported().then((supported) => {
+  if (supported) {
+    analytics = getAnalytics(app);
+  }
+});
