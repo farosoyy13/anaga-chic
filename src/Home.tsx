@@ -16,12 +16,19 @@ export default function Home() {
     }
   };
 
+  // عرض الغرفة الخاصة
   if (showOwnerRoom) return <OwnerRoom onClose={() => setShowOwnerRoom(false)} />;
 
+  // عرض منصة الحراج
   if (view === 'HARAJ') {
     return (
       <div style={{ background: '#000', minHeight: '100vh', padding: '20px' }}>
-        <button onClick={() => setView('HOME')} style={{ marginBottom: '10px', padding: '5px 15px', cursor: 'pointer', background: '#d4af37', border: 'none', borderRadius: '5px' }}>العودة للرئيسية</button>
+        <button 
+          onClick={() => setView('HOME')} 
+          style={{ marginBottom: '10px', padding: '8px 20px', cursor: 'pointer', background: '#d4af37', border: 'none', borderRadius: '5px', fontWeight: 'bold' }}
+        >
+          العودة للرئيسية
+        </button>
         <Haraj />
       </div>
     );
@@ -30,12 +37,15 @@ export default function Home() {
   return (
     <div style={{ background: '#000', color: '#d4af37', minHeight: '100vh', padding: '20px', textAlign: 'center', fontFamily: 'Cairo, sans-serif' }}>
       
-      <h1 onClick={handleAdminAccess} style={{ cursor: 'pointer', fontSize: '2.5rem', margin: '20px 0' }}>أناقة CHIC</h1>
+      {/* العنوان الملكي مع تفعيل الدخول السري */}
+      <h1 onClick={handleAdminAccess} style={{ cursor: 'pointer', fontSize: '2.5rem', margin: '20px 0', textShadow: '0 0 10px #d4af37' }}>
+        أناقة CHIC
+      </h1>
       
       {/* مربع رسالة المالك */}
       <div style={{ margin: '30px auto', padding: '20px', border: '2px solid #d4af37', borderRadius: '20px', maxWidth: '400px', background: '#0a0a0a' }}>
-        <h3 style={{ color: '#fff' }}>رسالة المالك:</h3>
-        <p style={{ lineHeight: '1.6', fontSize: '1rem' }}>
+        <h3 style={{ color: '#fff', marginBottom: '10px' }}>رسالة المالك:</h3>
+        <p style={{ lineHeight: '1.6', fontSize: '1rem', fontStyle: 'italic' }}>
           "يتمنى صاحب الموقع للجميع التوفيق والسداد. 
           نحن هنا لخدمتكم بأعلى معايير الجودة والخصوصية."
         </p>
@@ -43,9 +53,9 @@ export default function Home() {
 
       {/* أزرار التواصل */}
       <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', marginBottom: '30px' }}>
-        <a href="https://wa.me/966536667222" target="_blank" rel="noopener noreferrer" style={{ fontSize: '2rem' }}>💬</a>
-        <a href="https://snapchat.com/t/HPkkIfUp" target="_blank" rel="noopener noreferrer" style={{ fontSize: '2rem' }}>👻</a>
-        <a href="mailto:kal6667222@gmail.com" style={{ fontSize: '2rem' }}>📧</a>
+        <a href="https://wa.me/966536667222" target="_blank" rel="noopener noreferrer" style={{ fontSize: '2rem', textDecoration: 'none' }}>💬</a>
+        <a href="https://snapchat.com/t/HPkkIfUp" target="_blank" rel="noopener noreferrer" style={{ fontSize: '2rem', textDecoration: 'none' }}>👻</a>
+        <a href="mailto:kal6667222@gmail.com" style={{ fontSize: '2rem', textDecoration: 'none' }}>📧</a>
       </div>
 
       {/* مربع خدمات التقسيط */}
@@ -54,7 +64,10 @@ export default function Home() {
           <p><strong>تابي (Tabby) | تمارا (Tamara) | Apple Pay</strong></p>
       </div>
 
-      <button onClick={() => setView('HARAJ')} style={{ padding: '15px 40px', background: 'linear-gradient(45deg, #bf953f, #fcf6ba)', border: 'none', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer', fontSize: '1.1rem' }}>
+      <button 
+        onClick={() => setView('HARAJ')} 
+        style={{ padding: '15px 40px', background: 'linear-gradient(45deg, #bf953f, #fcf6ba)', border: 'none', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer', fontSize: '1.1rem', color: '#000' }}
+      >
         دخول المنصة
       </button>
     </div>
