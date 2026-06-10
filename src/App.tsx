@@ -6,13 +6,13 @@ import About from './About';
 import Sections from './Sections';
 import Login from './Login';
 import MainDashboard from './MainDashboard';
-import OwnerRoom from './OwnerRoom'; // تمت إضافته للربط
+import OwnerRoom from './OwnerRoom';
 
 export default function App() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState('HOME');
-  const [showOwnerRoom, setShowOwnerRoom] = useState(false); // الحالة للتحكم بغرفتك الخاصة
+  const [showOwnerRoom, setShowOwnerRoom] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -22,7 +22,6 @@ export default function App() {
     return unsubscribe;
   }, []);
 
-  // دالة الوداع الملكية الإيمانية
   const handleLogout = async () => {
     const message = "فمان الله وحافظك الله ولا تنسى صلاتك وأذكارك، زورنا مرة أخرى ولا تقاطعنا ❤️";
     const confirmLogout = window.confirm(message);
@@ -37,7 +36,7 @@ export default function App() {
   };
 
   if (loading) return (
-    <div style={{ background: '#000', color: '#d4af37', textAlign: 'center', marginTop: '50px', fontSize: '1.2rem', fontWeight: 'bold' }}>
+    <div style={{ background: '#000', color: '#d4af37', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
       جاري التحقق من الهوية الملكية...
     </div>
   );
@@ -55,7 +54,6 @@ export default function App() {
         <button onClick={() => setCurrentPage('SECTIONS')} style={navButtonStyle}>الأقسام</button>
         <button onClick={() => setCurrentPage('DASHBOARD')} style={navButtonStyle}>لوحة التحكم</button>
         <button onClick={() => setCurrentPage('ABOUT')} style={navButtonStyle}>عن أناقة CHIC</button>
-        {/* زر سري للوصول لغرفتك الخاصة من القائمة */}
         <button onClick={() => setShowOwnerRoom(true)} style={{ ...navButtonStyle, borderColor: '#fff', color: '#fff' }}>الغرفة الخاصة</button>
         <button onClick={handleLogout} style={{ ...navButtonStyle, borderColor: '#ef4444', color: '#ef4444' }}>تسجيل الخروج</button>
       </nav>
