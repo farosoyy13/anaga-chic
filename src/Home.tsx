@@ -21,7 +21,7 @@ export default function Home() {
   if (view === 'HARAJ') {
     return (
       <div style={{ background: '#000', minHeight: '100vh', padding: '20px' }}>
-        <button onClick={() => setView('HOME')} style={{ marginBottom: '10px' }}>العودة للرئيسية</button>
+        <button onClick={() => setView('HOME')} style={{ marginBottom: '10px', padding: '5px 15px' }}>العودة للرئيسية</button>
         <Haraj />
       </div>
     );
@@ -42,10 +42,33 @@ export default function Home() {
       </div>
 
       {/* أزرار التواصل المباشر */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', marginBottom: '40px' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', marginBottom: '20px' }}>
         <a href="https://wa.me/966536667222" target="_blank" rel="noopener noreferrer" style={{ fontSize: '2.5rem', textDecoration: 'none' }}>💬</a>
         <a href="https://snapchat.com/t/HPkkIfUp" target="_blank" rel="noopener noreferrer" style={{ fontSize: '2.5rem', textDecoration: 'none' }}>👻</a>
         <a href="mailto:kal6667222@gmail.com" style={{ fontSize: '2.5rem', textDecoration: 'none' }}>📧</a>
+      </div>
+
+      {/* بيانات التواصل كتابةً */}
+      <div style={{ marginBottom: '20px', fontSize: '0.9rem', color: '#fff' }}>
+        <p>واتساب: 00966536667222 / 00966507882771</p>
+        <p>البريد الإلكتروني: kal6667222@gmail.com</p>
+        <p>سناب شات: pmp.u</p>
+      </div>
+
+      {/* مربع خدمات التقسيط */}
+      <div style={{ 
+          margin: '20px auto', 
+          padding: '15px', 
+          border: '1px solid #d4af37', 
+          borderRadius: '10px', 
+          maxWidth: '350px', 
+          background: '#1a1a1a',
+          color: '#fff',
+          fontSize: '0.9rem',
+          marginBottom: '30px'
+      }}>
+          <p>✨ نوفر لكم خدمات الدفع بالتقسيط:</p>
+          <p><strong>تابي (Tabby) | تمارا (Tamara) | Apple Pay</strong></p>
       </div>
 
       <button onClick={() => setView('HARAJ')} style={{ padding: '15px 40px', background: 'linear-gradient(45deg, #bf953f, #fcf6ba)', border: 'none', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer' }}>
