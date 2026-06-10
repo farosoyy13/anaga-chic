@@ -1,93 +1,73 @@
 import React, { useState } from 'react';
+import { Star, CreditCard, ShieldCheck, XCircle, ShoppingBag, DollarSign } from 'lucide-react';
 
 export default function Haraj() {
   const [selectedItem, setSelectedItem] = useState<{id: number, name: string, price: string} | null>(null);
 
   const items = [
-    { id: 1, name: 'عباية ملكية', price: '500 SAR' },
-    { id: 2, name: 'فستان فاخر', price: '800 SAR' },
-    { id: 3, name: 'حقيبة جلدية', price: '300 SAR' },
+    { id: 1, name: 'عباية ملكية فاخرة', price: '500 SAR', featured: true },
+    { id: 2, name: 'فستان أعراس مطرز', price: '800 SAR', featured: false },
+    { id: 3, name: 'حقيبة جلدية ماركة', price: '300 SAR', featured: false },
   ];
 
-  const handlePay = (item: any) => {
-    setSelectedItem(item);
-  };
-
   return (
-    <div style={{ background: '#000', color: '#d4af37', minHeight: '100vh', padding: '20px', fontFamily: 'Cairo, sans-serif' }}>
-      <h2 style={{ textAlign: 'center', color: '#fff' }}>المنصة - أناقة CHIC</h2>
+    <div style={{ background: '#050505', color: '#d4af37', minHeight: '100vh', padding: '20px', fontFamily: 'serif' }}>
+      <h2 style={{ textAlign: 'center', fontSize: '2rem', borderBottom: '1px solid #d4af37', paddingBottom: '10px' }}>
+        منصة حراج أناقة CHIC الملكية
+      </h2>
 
       {items.map((item) => (
         <div key={item.id} style={{ 
             border: '1px solid #d4af37', 
-            padding: '15px', 
-            margin: '10px 0', 
-            borderRadius: '10px', 
-            background: '#0a0a0a' 
+            padding: '20px', 
+            margin: '15px 0', 
+            borderRadius: '15px', 
+            background: '#0a0a0a',
+            boxShadow: item.featured ? '0 0 15px rgba(212, 175, 55, 0.3)' : 'none'
         }}>
-          <h3 style={{ margin: '0 0 10px 0' }}>{item.name}</h3>
-          <p style={{ margin: '0 0 15px 0' }}>السعر: {item.price}</p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h3 style={{ margin: '0' }}>{item.name} {item.featured && <Star size={18} fill="#d4af37" />}</h3>
+            <ShoppingBag size={20} />
+          </div>
+          <p style={{ margin: '10px 0', color: '#fff', fontSize: '1.2rem', display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <DollarSign size={18} /> {item.price}
+          </p>
           <button 
-            onClick={() => handlePay(item)} 
-            style={{ 
-                background: 'linear-gradient(45deg, #bf953f, #fcf6ba)', 
-                border: 'none', 
-                padding: '10px 20px', 
-                borderRadius: '5px', 
-                fontWeight: 'bold', 
-                cursor: 'pointer',
-                width: '100%'
-            }}
+            onClick={() => setSelectedItem(item)} 
+            style={goldButtonStyle}
           >
-            دفع سريع
+            دفع سريع وأنيق
           </button>
         </div>
       ))}
 
-      {/* نافذة الدفع المنبثقة */}
+      {/* نافذة الدفع الملكية */}
       {selectedItem && (
-        <div style={{ 
-            position: 'fixed', 
-            top: '10%', 
-            left: '5%', 
-            right: '5%', 
-            background: '#1a1a1a', 
-            padding: '20px', 
-            border: '2px solid #d4af37', 
-            borderRadius: '15px', 
-            zIndex: 10,
-            boxShadow: '0 0 20px rgba(212, 175, 55, 0.5)'
-        }}>
-          <h3 style={{ color: '#fff', textAlign: 'center' }}>إتمام الشراء لـ: {selectedItem.name}</h3>
-          <p style={{ textAlign: 'center' }}>المبلغ: {selectedItem.price}</p>
-          
-          <div style={{ textAlign: 'right', fontSize: '0.9rem', color: '#d4af37', marginTop: '15px' }}>
-            <p><strong>التحويل البنكي:</strong></p>
-            <p>• بنك الراجحي: 09608010069017</p>
-            <p>• البنك العربي: 0108088851870011</p>
-            <hr style={{ borderColor: '#d4af37', margin: '15px 0' }} />
-            <p><strong>خيارات الدفع السريع:</strong></p>
-            <p style={{ color: '#fff' }}>• Apple Pay | تابي (Tabby) | تمارا (Tamara)</p>
-          </div>
+        <div style={modalOverlayStyle}>
+          <div style={modalStyle}>
+            <h3 style={{ color: '#d4af37', textAlign: 'center' }}>إتمام الطلب الملكي: {selectedItem.name}</h3>
+            <p style={{ textAlign: 'center', fontSize: '1.5rem', margin: '10px 0' }}>المبلغ: {selectedItem.price}</p>
+            
+            <div style={{ background: '#1a1a1a', padding: '15px', borderRadius: '10px', marginTop: '15px' }}>
+              <p style={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '5px' }}><ShieldCheck size={18} /> التحويل البنكي المعتمد:</p>
+              <p>• الراجحي: 09608010069017</p>
+              <p>• البنك العربي: 0108088851870011</p>
+              <hr style={{ borderColor: '#333' }} />
+              <p style={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '5px' }}><CreditCard size={18} /> طرق الدفع السريع:</p>
+              <p style={{ color: '#fff' }}>Apple Pay | Tabby | Tamara</p>
+            </div>
 
-          <button 
-            onClick={() => setSelectedItem(null)} 
-            style={{ 
-                marginTop: '20px', 
-                width: '100%', 
-                padding: '12px', 
-                background: '#333', 
-                color: '#fff', 
-                border: '1px solid #d4af37', 
-                borderRadius: '5px', 
-                fontWeight: 'bold',
-                cursor: 'pointer'
-            }}
-          >
-            إغلاق
-          </button>
+            <button onClick={() => setSelectedItem(null)} style={closeButtonStyle}>
+              <XCircle size={20} /> إغلاق
+            </button>
+          </div>
         </div>
       )}
     </div>
   );
 }
+
+const goldButtonStyle = { background: 'linear-gradient(45deg, #bf953f, #fcf6ba)', border: 'none', padding: '12px', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', width: '100%', fontSize: '1rem' };
+const modalOverlayStyle = { position: 'fixed' as 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.85)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 };
+const modalStyle = { background: '#0a0a0a', padding: '25px', border: '2px solid #d4af37', borderRadius: '20px', width: '90%', maxWidth: '400px', boxShadow: '0 0 30px #d4af37' };
+const closeButtonStyle = { marginTop: '20px', width: '100%', padding: '12px', background: 'transparent', color: '#d4af37', border: '1px solid #d4af37', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' };
