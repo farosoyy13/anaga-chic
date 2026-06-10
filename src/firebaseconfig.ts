@@ -2,16 +2,19 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
+// قم بوضع بيانات مشروعك من لوحة تحكم Firebase هنا
 const firebaseConfig = {
-  // يرجى استبدال هذه البيانات ببيانات مشروعك الخاصة من لوحة تحكم Firebase
   apiKey: "YOUR_API_KEY",
-  authDomain: "anaqa-chic.firebaseapp.com",
-  projectId: "anaqa-chic",
-  storageBucket: "anaqa-chic.appspot.com",
-  messagingSenderId: "YOUR_ID",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
   appId: "YOUR_APP_ID"
 };
 
+// تهيئة Firebase
 const app = initializeApp(firebaseConfig);
+
+// تصدير الأدوات اللازمة للخدمات
 export const auth = getAuth(app);
 export const db = getFirestore(app);
