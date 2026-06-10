@@ -63,7 +63,7 @@ export default function App() {
   );
 }
 
-const navButtonStyle = {
+const navButtonStyle: React.CSSProperties = {
   background: 'transparent',
   border: '1px solid #d4af37',
   color: '#d4af37',
