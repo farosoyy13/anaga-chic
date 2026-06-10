@@ -1,79 +1,54 @@
 import React, { useState } from 'react';
-import OwnerRoom from './OwnerRoom';
-import Haraj from './Haraj';
 
-export default function Home() {
-  const [showOwnerRoom, setShowOwnerRoom] = useState(false);
-  const [view, setView] = useState('HOME');
+export default function Haraj() {
+  const [selectedItem, setSelectedItem] = useState(null);
 
-  const handleAdminAccess = () => {
-    const password = prompt("أدخل رمز الدخول الملكي:");
-    if (password === "Fahd2026") { 
-      alert("تم دخول صاحب الموقع: البروفيسور فهد بن حمود بن فهد الشمري. يتمنى للجميع التوفيق والسداد.");
-      setShowOwnerRoom(true);
-    } else {
-      alert("رمز خاطئ!");
-    }
+  // بيانات السلع (يمكنك التعديل عليها لاحقاً)
+  const items = [
+    { id: 1, name: 'عباية ملكية', price: '500 SAR' },
+    { id: 2, name: 'فستان فاخر', price: '800 SAR' },
+    { id: 3, name: 'حقيبة جلدية', price: '300 SAR' },
+  ];
+
+  const handlePay = (item) => {
+    setSelectedItem(item);
   };
 
-  if (showOwnerRoom) return <OwnerRoom onClose={() => setShowOwnerRoom(false)} />;
-
-  if (view === 'HARAJ') {
-    return (
-      <div style={{ background: '#000', minHeight: '100vh', padding: '20px' }}>
-        <button onClick={() => setView('HOME')} style={{ marginBottom: '10px', padding: '5px 15px' }}>العودة للرئيسية</button>
-        <Haraj />
-      </div>
-    );
-  }
-
   return (
-    <div style={{ background: '#000', color: '#d4af37', minHeight: '100vh', padding: '20px', textAlign: 'center', fontFamily: 'Cairo, sans-serif' }}>
-      
-      <h1 onClick={handleAdminAccess} style={{ cursor: 'pointer', fontSize: '2rem' }}>أناقة CHIC</h1>
-      
-      <div style={{ margin: '40px auto', padding: '30px', border: '2px solid #d4af37', borderRadius: '20px', maxWidth: '400px', background: '#0a0a0a' }}>
-        <h3 style={{ color: '#fff' }}>رسالة المالك:</h3>
-        <p style={{ lineHeight: '1.6', fontSize: '1rem' }}>
-          "يتمنى صاحب الموقع للجميع التوفيق والسداد. 
-          ومن لديه أي شكوى أو ملاحظة على أي شخص، سواء موظف أو زائر، 
-          فليتوجه لغرفة صاحب الموقع الخاصة، وسوف يأخذ حقه كاملاً بخصوصية تامة ومشفرة."
-        </p>
-      </div>
+    <div style={{ padding: '20px', color: '#d4af37', fontFamily: 'Cairo, sans-serif' }}>
+      <h2 style={{ textAlign: 'center' }}>المنصة - أناقة CHIC</h2>
 
-      {/* أزرار التواصل المباشر */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', marginBottom: '20px' }}>
-        <a href="https://wa.me/966536667222" target="_blank" rel="noopener noreferrer" style={{ fontSize: '2.5rem', textDecoration: 'none' }}>💬</a>
-        <a href="https://snapchat.com/t/HPkkIfUp" target="_blank" rel="noopener noreferrer" style={{ fontSize: '2.5rem', textDecoration: 'none' }}>👻</a>
-        <a href="mailto:kal6667222@gmail.com" style={{ fontSize: '2.5rem', textDecoration: 'none' }}>📧</a>
-      </div>
+      {items.map((item) => (
+        <div key={item.id} style={{ border: '1px solid #d4af37', padding: '15px', margin: '10px 0', borderRadius: '10px', background: '#0a0a0a' }}>
+          <h3>{item.name}</h3>
+          <p>السعر: {item.price}</p>
+          <button 
+            onClick={() => handlePay(item)} 
+            style={{ background: 'linear-gradient(45deg, #bf953f, #fcf6ba)', border: 'none', padding: '10px 20px', borderRadius: '5px', fontWeight: 'bold', cursor: 'pointer' }}
+          >
+            دفع سريع
+          </button>
+        </div>
+      ))}
 
-      {/* بيانات التواصل كتابةً */}
-      <div style={{ marginBottom: '20px', fontSize: '0.9rem', color: '#fff' }}>
-        <p>واتساب: 00966536667222 / 00966507882771</p>
-        <p>البريد الإلكتروني: kal6667222@gmail.com</p>
-        <p>سناب شات: pmp.u</p>
-      </div>
+      {/* نافذة الدفع */}
+      {selectedItem && (
+        <div style={{ position: 'fixed', top: '10%', left: '5%', right: '5%', background: '#000', padding: '20px', border: '2px solid #d4af37', borderRadius: '15px', zIndex: 10 }}>
+          <h3>اتمام عملية الشراء لـ: {selectedItem.name}</h3>
+          <p>السعر: {selectedItem.price}</p>
+          
+          <div style={{ textAlign: 'right', fontSize: '0.9rem' }}>
+            <p><strong>خيار الدفع:</strong></p>
+            <p>• بنك الراجحي: 09608010069017</p>
+            <p>• البنك العربي: 0108088851870011</p>
+            <p>• تابي | تمارا | Apple Pay</p>
+          </div>
 
-      {/* مربع خدمات التقسيط */}
-      <div style={{ 
-          margin: '20px auto', 
-          padding: '15px', 
-          border: '1px solid #d4af37', 
-          borderRadius: '10px', 
-          maxWidth: '350px', 
-          background: '#1a1a1a',
-          color: '#fff',
-          fontSize: '0.9rem',
-          marginBottom: '30px'
-      }}>
-          <p>✨ نوفر لكم خدمات الدفع بالتقسيط:</p>
-          <p><strong>تابي (Tabby) | تمارا (Tamara) | Apple Pay</strong></p>
-      </div>
-
-      <button onClick={() => setView('HARAJ')} style={{ padding: '15px 40px', background: 'linear-gradient(45deg, #bf953f, #fcf6ba)', border: 'none', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer' }}>
-        دخول المنصة
-      </button>
+          <button onClick={() => setSelectedItem(null)} style={{ marginTop: '20px', width: '100%', padding: '10px', background: '#333', color: '#fff', border: 'none', borderRadius: '5px' }}>
+            إغلاق
+          </button>
+        </div>
+      )}
     </div>
   );
 }
