@@ -6,11 +6,13 @@ import About from './About';
 import Sections from './Sections';
 import Login from './Login';
 import MainDashboard from './MainDashboard';
+import OwnerRoom from './OwnerRoom'; // تمت إضافته للربط
 
 export default function App() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState('HOME');
+  const [showOwnerRoom, setShowOwnerRoom] = useState(false); // الحالة للتحكم بغرفتك الخاصة
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -42,6 +44,9 @@ export default function App() {
 
   if (!user) return <Login />;
 
+  // إذا تم تفعيل وضع غرفة المالك، يتم عرضها فقط
+  if (showOwnerRoom) return <OwnerRoom onClose={() => setShowOwnerRoom(false)} />;
+
   return (
     <div style={{ background: '#000', minHeight: '100vh', color: '#d4af37', fontFamily: 'Cairo, sans-serif' }}>
       {/* شريط التنقل الملكي المتطور */}
@@ -50,6 +55,8 @@ export default function App() {
         <button onClick={() => setCurrentPage('SECTIONS')} style={navButtonStyle}>الأقسام</button>
         <button onClick={() => setCurrentPage('DASHBOARD')} style={navButtonStyle}>لوحة التحكم</button>
         <button onClick={() => setCurrentPage('ABOUT')} style={navButtonStyle}>عن أناقة CHIC</button>
+        {/* زر سري للوصول لغرفتك الخاصة من القائمة */}
+        <button onClick={() => setShowOwnerRoom(true)} style={{ ...navButtonStyle, borderColor: '#fff', color: '#fff' }}>الغرفة الخاصة</button>
         <button onClick={handleLogout} style={{ ...navButtonStyle, borderColor: '#ef4444', color: '#ef4444' }}>تسجيل الخروج</button>
       </nav>
 
