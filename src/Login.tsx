@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { auth } from './firebaseconfig';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
-import { Lock, Eye, AlertCircle, ShieldCheck } from 'lucide-react';
+import { auth, googleProvider } from './firebaseconfig'; // استيراد googleProvider
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { Lock, AlertCircle, Sparkles } from 'lucide-react';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -10,6 +10,7 @@ export default function Login() {
   const [message, setMessage] = useState('');
   const [loginAttempts, setLoginAttempts] = useState(0);
 
+  // دالة الدخول التقليدية
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -26,10 +27,20 @@ export default function Login() {
     }
   };
 
+  // دالة الدخول عبر جوجل الملكية
+  const handleGoogleLogin = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      alert("تم الدخول بنجاح عبر حساب جوجل الملكي");
+    } catch (err: any) {
+      setMessage("خطأ في الدخول عبر جوجل: " + err.message);
+    }
+  };
+
   return (
     <div style={{ background: '#000', color: '#d4af37', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontFamily: 'Cairo, sans-serif', position: 'relative' }}>
       
-      {/* الاختراع 4: الزر الملكي الخفي للوصول لغرفتك */}
+      {/* الزر الملكي الخفي للوصول لغرفتك */}
       <button 
         onClick={() => alert("مرحباً بك يا بروفيسور فهد في غرفة التحكم الخفية!")}
         style={{ position: 'absolute', top: '10px', right: '10px', background: 'transparent', border: 'none', cursor: 'pointer', opacity: 0.05 }}
@@ -46,13 +57,22 @@ export default function Login() {
         <input type="email" placeholder="البريد الإلكتروني الملكي" onChange={(e) => setEmail(e.target.value)} style={inputStyle} />
         <input type="password" placeholder="كلمة المرور" onChange={(e) => setPassword(e.target.value)} style={inputStyle} />
         
-        {/* الاختراع 3: مؤشر قوة التشفير */}
+        {/* مؤشر قوة التشفير */}
         <div style={{ height: '4px', background: '#333', marginBottom: '20px', borderRadius: '2px' }}>
           <div style={{ width: password.length > 8 ? '100%' : '30%', height: '100%', background: '#d4af37', transition: '0.3s' }}></div>
         </div>
 
         <button type="submit" style={buttonStyle}>
           {isRegistering ? 'إنشاء حساب جديد' : 'دخول البوابة'}
+        </button>
+
+        {/* زر الدخول عبر جوجل */}
+        <button 
+          type="button" 
+          onClick={handleGoogleLogin} 
+          style={{ ...buttonStyle, background: '#fff', color: '#000', marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}
+        >
+          <Sparkles size={18} /> الدخول عبر Google
         </button>
       </form>
 
@@ -74,5 +94,5 @@ const inputStyle: React.CSSProperties = {
 };
 
 const buttonStyle: React.CSSProperties = {
-  width: '100%', padding: '15px', background: '#d4af37', color: '#000', border: 'none', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer', fontSize: '1rem'
+  width: '100%', padding: '15px', background: '#d4af37', color: '#000', border: 'none', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer', fontSize: '1rem', transition: '0.3s'
 };
