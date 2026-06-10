@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
-import { auth, googleProvider, db } from './firebaseconfig'; 
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-// هنا قمت باستيراد الأدوات التي تحتاجها لضمان عمل النظام
-import { doc, setDoc, collection, addDoc, serverTimestamp } from 'firebase/firestore'; 
-import { Lock, AlertCircle, Sparkles } from 'lucide-react';
+import { auth, db } from './firebaseconfig'; 
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'; 
+import { Crown, ShieldCheck, User, Sparkles, Loader2 } from 'lucide-react';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isRegistering, setIsRegistering] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
-  // دالة تسجيل الأحداث الأمنية في "غرفتك الخاصة"
+  // دالة تسجيل أمنية دقيقة
   const logSecurityEvent = async (type: string, details: string) => {
     try {
       await addDoc(collection(db, "security_logs"), { 
@@ -22,57 +21,52 @@ export default function Login() {
     } catch (e) { console.error("فشل تسجيل الحدث"); }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      if (isRegistering) {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        // إنشاء سجل للمستخدم الجديد في قاعدة البيانات
-        await setDoc(doc(db, "users", userCredential.user.uid), { 
-          email: email, 
-          isBlocked: false 
-        });
-        alert("تم إنشاء حسابك الملكي بنجاح");
-      } else {
-        await signInWithEmailAndPassword(auth, email, password);
-        await logSecurityEvent("دخول", `دخول المستخدم: ${email}`);
-      }
-    } catch (err: any) {
-      await logSecurityEvent("محاولة فاشلة", `فشل دخول: ${email}`);
-      setMessage("خطأ في البيانات أو الحساب محظور.");
+  const handleLogin = async (role: string) => {
+    if (!email || !password) {
+      setMessage("يرجى إدخال البريد وكلمة المرور");
+      return;
     }
-  };
-
-  const handleGoogleLogin = async () => {
-    const allowedEmail = "kal6667222@gmail.com";
+    
+    setLoading(true);
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      if (result.user.email !== allowedEmail) {
-        await logSecurityEvent("محاولة اختراق", `شخص غير مصرح له: ${result.user.email}`);
-        auth.signOut();
-        alert("تنبيه: لا تملك صلاحية الدخول!");
-      } else {
-        alert("أهلاً بك يا بروفيسور فهد");
-      }
+      await signInWithEmailAndPassword(auth, email, password);
+      await logSecurityEvent("دخول ناجح", `دخول ${role}: ${email}`);
+      setMessage(`أهلاً بك في بوابة ${role} - جارٍ التوجيه...`);
+      // هنا سيقوم الموقع تلقائياً بتحويل المستخدم للمنصة الرئيسية
+      window.location.href = '/home'; 
     } catch (err: any) {
-      setMessage("خطأ في الاتصال بجوجل");
+      await logSecurityEvent("محاولة دخول فاشلة", `فشل دخول ${role}: ${email}`);
+      setMessage("عذراً، بيانات الدخول غير صحيحة.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    // واجهة الدخول (نفس تصميمك السابق)
-    <div style={{ background: '#000', color: '#d4af37', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-      <h1>أناقة CHIC</h1>
-      <form onSubmit={handleSubmit} style={{ width: '90%', maxWidth: '350px' }}>
+    <div style={{ background: '#0a0a0a', color: '#d4af37', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '20px', fontFamily: 'serif' }}>
+      <Sparkles size={50} color="#d4af37" style={{ marginBottom: '20px' }} />
+      <h1 style={{ fontSize: '2.8rem', marginBottom: '10px', textShadow: '0 0 15px #d4af37' }}>أناقة CHIC</h1>
+      <p style={{ marginBottom: '40px', letterSpacing: '2px' }}>البوابة الملكية الموثوقة</p>
+
+      <div style={{ width: '100%', maxWidth: '380px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
         <input type="email" placeholder="البريد الإلكتروني" onChange={(e) => setEmail(e.target.value)} style={inputStyle} />
         <input type="password" placeholder="كلمة المرور" onChange={(e) => setPassword(e.target.value)} style={inputStyle} />
-        <button type="submit" style={buttonStyle}>{isRegistering ? 'تسجيل جديد' : 'دخول'}</button>
-        <button type="button" onClick={handleGoogleLogin} style={{ ...buttonStyle, background: '#fff', marginTop: '10px' }}>الدخول بجوجل</button>
-      </form>
-      {message && <p>{message}</p>}
+
+        <button disabled={loading} onClick={() => handleLogin('العرش')} style={buttonStyle}>
+          {loading ? <Loader2 className="animate-spin" /> : <><Crown size={20} /> دخول صاحب الموقع</>}
+        </button>
+        <button disabled={loading} onClick={() => handleLogin('الإدارة')} style={{...buttonStyle, background: 'transparent', border: '1px solid #d4af37'}}>
+          <ShieldCheck size={20} /> دخول المشرفين
+        </button>
+        <button disabled={loading} onClick={() => handleLogin('الزوار')} style={{...buttonStyle, background: '#1a1a1a'}}>
+          <User size={20} /> دخول الزوار
+        </button>
+      </div>
+
+      {message && <p style={{ marginTop: '25px', padding: '10px', borderRadius: '5px', background: '#1a1a1a', border: '1px solid #d4af37' }}>{message}</p>}
     </div>
   );
 }
 
-const inputStyle = { width: '100%', padding: '15px', marginBottom: '10px', background: '#000', color: '#d4af37', border: '1px solid #d4af37' };
-const buttonStyle = { width: '100%', padding: '15px', background: '#d4af37', color: '#000', border: 'none', cursor: 'pointer' };
+const inputStyle = { width: '100%', padding: '15px', background: '#111', color: '#d4af37', border: '1px solid #d4af37', borderRadius: '8px', fontSize: '16px' };
+const buttonStyle = { width: '100%', padding: '15px', background: '#d4af37', color: '#000', border: 'none', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', fontWeight: 'bold', fontSize: '16px' };
