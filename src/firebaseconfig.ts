@@ -1,9 +1,10 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { getAnalytics, isSupported } from "firebase/analytics";
+import { getAuth, GoogleAuthProvider } from "firebase/auth"; // أضفنا أدوات الدخول
+import { getFirestore } from "firebase/firestore"; // أضفنا أدوات قاعدة البيانات
+import { getAnalytics } from "firebase/analytics";
 
-// إعدادات Firebase الخاصة بمشروعك "أناقة CHIC"
+// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCK8IWcEV_z9DXj0YKq8IjObm1AzEJsjgE",
   authDomain: "anaqachic-5.firebaseapp.com",
@@ -14,17 +15,11 @@ const firebaseConfig = {
   measurementId: "G-PZSBZ0BKZN"
 };
 
-// تهيئة Firebase
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// تهيئة الأدوات
+// تصدير الأدوات لكي تستخدمها في ملفات المشروع
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-
-// تهيئة التحليلات مع التحقق من الدعم (لضمان استقرار الموقع)
-export let analytics: any = null;
-isSupported().then((supported) => {
-  if (supported) {
-    analytics = getAnalytics(app);
-  }
-});
+export const googleProvider = new GoogleAuthProvider(); // هذا هو مفتاح الدخول بجوجل
+export const analytics = getAnalytics(app);
