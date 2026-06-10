@@ -42,7 +42,7 @@ export default function App() {
         {currentPage === 'ABOUT' && <About />}
       </main>
       
-      {/* تذييل ثابت للموقع (اختياري) */}
+      {/* تذييل ثابت للموقع */}
       <footer style={{ textAlign: 'center', padding: '10px', fontSize: '0.8rem', borderTop: '1px solid #333' }}>
         أناقة CHIC - بروفيسور فهد بن حمود بن فهد الشمري © 2026
       </footer>
