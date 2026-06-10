@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import OwnerRoom from './OwnerRoom';
 import Haraj from './Haraj';
+import { Crown, Sparkles, MessageCircle, Star } from 'lucide-react';
 
 export default function Home() {
   const [showOwnerRoom, setShowOwnerRoom] = useState(false);
@@ -9,67 +10,67 @@ export default function Home() {
   const handleAdminAccess = () => {
     const password = prompt("أدخل رمز الدخول الملكي:");
     if (password === "Fahd2026") { 
-      alert("تم دخول صاحب الموقع: البروفيسور فهد بن حمود بن فهد الشمري.");
       setShowOwnerRoom(true);
     } else {
       alert("رمز خاطئ!");
     }
   };
 
-  // عرض الغرفة الخاصة
   if (showOwnerRoom) return <OwnerRoom onClose={() => setShowOwnerRoom(false)} />;
 
-  // عرض منصة الحراج
   if (view === 'HARAJ') {
     return (
       <div style={{ background: '#000', minHeight: '100vh', padding: '20px' }}>
-        <button 
-          onClick={() => setView('HOME')} 
-          style={{ marginBottom: '10px', padding: '8px 20px', cursor: 'pointer', background: '#d4af37', border: 'none', borderRadius: '5px', fontWeight: 'bold' }}
-        >
-          العودة للرئيسية
-        </button>
+        <button onClick={() => setView('HOME')} style={navButtonStyle}>العودة للرئيسية</button>
         <Haraj />
       </div>
     );
   }
 
   return (
-    <div style={{ background: '#000', color: '#d4af37', minHeight: '100vh', padding: '20px', textAlign: 'center', fontFamily: 'Cairo, sans-serif' }}>
+    <div style={{ background: '#050505', color: '#d4af37', minHeight: '100vh', fontFamily: 'serif' }}>
       
-      {/* العنوان الملكي مع تفعيل الدخول السري */}
-      <h1 onClick={handleAdminAccess} style={{ cursor: 'pointer', fontSize: '2.5rem', margin: '20px 0', textShadow: '0 0 10px #d4af37' }}>
-        أناقة CHIC
+      {/* 1. الشريط المتحرك للإعلانات */}
+      <div style={{ background: '#1a1a1a', padding: '10px', overflow: 'hidden', borderBottom: '1px solid #d4af37' }}>
+        <marquee style={{ fontWeight: 'bold' }}>✨ أهلاً بك في أناقة CHIC - فخامة تليق بالجيل الذهبي | تسوق الآن واستمتع بالجودة الملكية ✨</marquee>
+      </div>
+
+      {/* 2. العنوان */}
+      <h1 onClick={handleAdminAccess} style={{ textAlign: 'center', cursor: 'pointer', fontSize: '3rem', margin: '20px 0', color: '#d4af37' }}>
+        أناقة CHIC <Sparkles size={24} />
       </h1>
-      
-      {/* مربع رسالة المالك */}
-      <div style={{ margin: '30px auto', padding: '20px', border: '2px solid #d4af37', borderRadius: '20px', maxWidth: '400px', background: '#0a0a0a' }}>
-        <h3 style={{ color: '#fff', marginBottom: '10px' }}>رسالة المالك:</h3>
-        <p style={{ lineHeight: '1.6', fontSize: '1rem', fontStyle: 'italic' }}>
-          "يتمنى صاحب الموقع للجميع التوفيق والسداد. 
-          نحن هنا لخدمتكم بأعلى معايير الجودة والخصوصية."
+
+      {/* 3. ركن الملوك */}
+      <div style={{ margin: '20px', padding: '20px', border: '1px solid #d4af37', borderRadius: '15px', textAlign: 'center' }}>
+        <Crown size={40} style={{ marginBottom: '10px' }} />
+        <h2 style={{ fontSize: '1.2rem' }}>نفتخر بقيادتنا الرشيدة</h2>
+        <p style={{ fontSize: '0.9rem', color: '#fff' }}>
+          الملك عبدالعزيز والملك سلمان وولي العهد محمد بن سلمان - عز وفخر. 
+          شعب طويق الطموح ودرع الخليج الصامد، أنتم النبض والروح.
         </p>
       </div>
 
-      {/* أزرار التواصل */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '30px', marginBottom: '30px' }}>
-        <a href="https://wa.me/966536667222" target="_blank" rel="noopener noreferrer" style={{ fontSize: '2rem', textDecoration: 'none' }}>💬</a>
-        <a href="https://snapchat.com/t/HPkkIfUp" target="_blank" rel="noopener noreferrer" style={{ fontSize: '2rem', textDecoration: 'none' }}>👻</a>
-        <a href="mailto:kal6667222@gmail.com" style={{ fontSize: '2rem', textDecoration: 'none' }}>📧</a>
+      {/* 4. الأزرار الملكية */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', padding: '20px' }}>
+        {['فساتين فخمة', 'شنط ماركة', 'الجيل الذهبي', 'عبايات فخمة'].map((item) => (
+          <button key={item} style={royalBtn}>{item}</button>
+        ))}
       </div>
 
-      {/* مربع خدمات التقسيط */}
-      <div style={{ margin: '20px auto', padding: '15px', border: '1px solid #d4af37', borderRadius: '10px', maxWidth: '350px', background: '#1a1a1a', color: '#fff', fontSize: '0.9rem', marginBottom: '30px' }}>
-          <p>✨ نوفر لكم خدمات الدفع بالتقسيط:</p>
-          <p><strong>تابي (Tabby) | تمارا (Tamara) | Apple Pay</strong></p>
+      {/* 5. زر المنصة */}
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <button onClick={() => setView('HARAJ')} style={mainActionBtn}>دخول المنصة الملكية (حراج)</button>
       </div>
 
-      <button 
-        onClick={() => setView('HARAJ')} 
-        style={{ padding: '15px 40px', background: 'linear-gradient(45deg, #bf953f, #fcf6ba)', border: 'none', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer', fontSize: '1.1rem', color: '#000' }}
-      >
-        دخول المنصة
+      {/* 6. مساعد أناقة (الذكاء الاصطناعي) */}
+      <button style={aiFloatBtn}>
+        <MessageCircle /> مساعد أناقة الذكي
       </button>
     </div>
   );
 }
+
+const navButtonStyle = { padding: '10px 20px', background: '#d4af37', border: 'none', borderRadius: '5px', fontWeight: 'bold', cursor: 'pointer' };
+const royalBtn = { padding: '15px', background: '#111', border: '1px solid #d4af37', color: '#d4af37', borderRadius: '8px', cursor: 'pointer' };
+const mainActionBtn = { padding: '20px 40px', background: 'linear-gradient(45deg, #bf953f, #fcf6ba)', border: 'none', borderRadius: '50px', fontWeight: 'bold', fontSize: '1.2rem', cursor: 'pointer' };
+const aiFloatBtn = { position: 'fixed', bottom: '20px', right: '20px', background: '#d4af37', border: 'none', borderRadius: '30px', padding: '15px', display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' };
