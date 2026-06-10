@@ -1,19 +1,22 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import { getFirestore } from "firebase/firestore"; // هذه الأداة ضرورية
+import { getFirestore } from "firebase/firestore";
 
+// إعدادات Firebase التي ستتم قراءتها من إعدادات Cloudflare
 const firebaseConfig = {
-  apiKey: "AIzaSyCK8IWcEV_z9DXj0YKq8IjObm1AzEJsjgE",
-  authDomain: "anaqachic-5.firebaseapp.com",
-  projectId: "anaqachic-5",
-  storageBucket: "anaqachic-5.firebasestorage.app",
-  messagingSenderId: "403484478286",
-  appId: "1:403484478286:web:1ce25b87ea7ebec8ddec1f",
-  measurementId: "G-PZSBZ0BKZN"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
+// تهيئة تطبيق Firebase
 const app = initializeApp(firebaseConfig);
 
+// تصدير الأدوات الأساسية لاستخدامها في بقية ملفات المشروع
 export const auth = getAuth(app);
-export const db = getFirestore(app); // هنا قمنا بتهيئة قاعدة البيانات
+export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
