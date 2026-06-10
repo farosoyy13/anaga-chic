@@ -21,7 +21,7 @@ export default function Home() {
   if (view === 'HARAJ') {
     return (
       <div style={{ background: '#000', minHeight: '100vh', padding: '20px' }}>
-        <button onClick={() => setView('HOME')} style={{ marginBottom: '10px', padding: '5px 15px' }}>العودة للرئيسية</button>
+        <button onClick={() => setView('HOME')} style={{ marginBottom: '10px', padding: '5px 15px', cursor: 'pointer' }}>العودة للرئيسية</button>
         <Haraj />
       </div>
     );
@@ -48,7 +48,7 @@ export default function Home() {
         <a href="mailto:kal6667222@gmail.com" style={{ fontSize: '2.5rem', textDecoration: 'none' }}>📧</a>
       </div>
 
-      {/* بيانات التواصل كتابةً */}
+      {/* بيانات التواصل */}
       <div style={{ marginBottom: '20px', fontSize: '0.9rem', color: '#fff' }}>
         <p>واتساب: 00966536667222 / 00966507882771</p>
         <p>البريد الإلكتروني: kal6667222@gmail.com</p>
@@ -71,7 +71,15 @@ export default function Home() {
           <p><strong>تابي (Tabby) | تمارا (Tamara) | Apple Pay</strong></p>
       </div>
 
-      <button onClick={() => setView('HARAJ')} style={{ padding: '15px 40px', background: 'linear-gradient(45deg, #bf953f, #fcf6ba)', border: 'none', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer' }}>
+      <button onClick={() => setView('HARAJ')} style={{ 
+          padding: '15px 40px', 
+          background: 'linear-gradient(45deg, #bf953f, #fcf6ba)', 
+          border: 'none', 
+          borderRadius: '10px', 
+          fontWeight: 'bold', 
+          cursor: 'pointer',
+          fontSize: '1.1rem' 
+      }}>
         دخول المنصة
       </button>
     </div>
