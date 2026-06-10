@@ -12,7 +12,11 @@
     "clsx": "^2.1.0",
     "tailwind-merge": "^2.2.1",
     "canvas-confetti": "^1.9.2",
-    "use-sound": "^4.0.1"
+    "use-sound": "^4.0.1",
+    "gsap": "^3.12.5",
+    "three": "^0.162.0",
+    "@react-three/fiber": "^8.15.16",
+    "@react-three/drei": "^9.97.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -26,7 +30,8 @@
     "@types/node": "^16.18.80",
     "@types/react": "^18.2.57",
     "@types/react-dom": "^18.2.19",
-    "@types/canvas-confetti": "^1.6.4"
+    "@types/canvas-confetti": "^1.6.4",
+    "@types/three": "^0.162.0"
   },
   "browserslist": {
     "production": [
