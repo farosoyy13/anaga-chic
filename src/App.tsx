@@ -19,7 +19,7 @@ export default function App() {
       setUser(currentUser);
       setLoading(false);
     });
-    return unsubscribe;
+    return () => unsubscribe();
   }, []);
 
   const handleLogout = async () => {
@@ -43,12 +43,10 @@ export default function App() {
 
   if (!user) return <Login />;
 
-  // إذا تم تفعيل وضع غرفة المالك، يتم عرضها فقط
   if (showOwnerRoom) return <OwnerRoom onClose={() => setShowOwnerRoom(false)} />;
 
   return (
     <div style={{ background: '#000', minHeight: '100vh', color: '#d4af37', fontFamily: 'Cairo, sans-serif' }}>
-      {/* شريط التنقل الملكي المتطور */}
       <nav style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '10px', padding: '15px', borderBottom: '2px solid #d4af37', background: '#0a0a0a' }}>
         <button onClick={() => setCurrentPage('HOME')} style={navButtonStyle}>الرئيسية</button>
         <button onClick={() => setCurrentPage('SECTIONS')} style={navButtonStyle}>الأقسام</button>
