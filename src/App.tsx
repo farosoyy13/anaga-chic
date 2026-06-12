@@ -9,14 +9,12 @@ import './components/App.css';
 export default function App() {
   const [currentPage, setCurrentPage] = useState('LOGIN');
 
-  // نظام التنقل الملكي الثابت
   const navigate = (page: string) => {
     setCurrentPage(page);
   };
 
   return (
     <div className="main-container">
-      {/* عرض الصفحة بناءً على الحالة الحالية بدون إعادة تحميل */}
       {currentPage === 'LOGIN' && <Login onLoginSuccess={() => navigate('HOME')} />}
       
       {currentPage !== 'LOGIN' && (
