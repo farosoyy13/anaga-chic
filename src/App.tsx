@@ -7,13 +7,14 @@ import Sections from './Sections';
 import Login from './Login';
 import MainDashboard from './MainDashboard';
 import OwnerRoom from './OwnerRoom';
+import './App.css';
 
 export default function App() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState < any > (null);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState('HOME');
   const [showOwnerRoom, setShowOwnerRoom] = useState(false);
-
+  
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -21,39 +22,27 @@ export default function App() {
     });
     return () => unsubscribe();
   }, []);
-
+  
   const handleLogout = async () => {
-    const message = "فمان الله وحافظك الله ولا تنسى صلاتك وأذكارك، زورنا مرة أخرى ولا تقاطعنا ❤️";
-    const confirmLogout = window.confirm(message);
-    if (confirmLogout) {
-      try {
-        await signOut(auth);
-        window.location.reload();
-      } catch (error) {
-        console.error("خطأ في تسجيل الخروج:", error);
-      }
+    if (window.confirm("فمان الله وحافظك الله ولا تنسى صلاتك وأذكارك، زورنا مرة أخرى ولا تقاطعنا ❤️")) {
+      try { await signOut(auth);
+        window.location.reload(); } catch (error) { console.error(error); }
     }
   };
-
-  if (loading) return (
-    <div style={{ background: '#000', color: '#d4af37', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: 'bold' }}>
-      جاري التحقق من الهوية الملكية...
-    </div>
-  );
-
+  
+  if (loading) return <div className="loading-screen">جاري التحقق من الهوية الملكية...</div>;
   if (!user) return <Login />;
-
   if (showOwnerRoom) return <OwnerRoom onClose={() => setShowOwnerRoom(false)} />;
-
+  
   return (
-    <div style={{ background: '#000', minHeight: '100vh', color: '#d4af37', fontFamily: 'Cairo, sans-serif' }}>
-      <nav style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '10px', padding: '15px', borderBottom: '2px solid #d4af37', background: '#0a0a0a' }}>
-        <button onClick={() => setCurrentPage('HOME')} style={navButtonStyle}>الرئيسية</button>
-        <button onClick={() => setCurrentPage('SECTIONS')} style={navButtonStyle}>الأقسام</button>
-        <button onClick={() => setCurrentPage('DASHBOARD')} style={navButtonStyle}>لوحة التحكم</button>
-        <button onClick={() => setCurrentPage('ABOUT')} style={navButtonStyle}>عن أناقة CHIC</button>
-        <button onClick={() => setShowOwnerRoom(true)} style={{ ...navButtonStyle, borderColor: '#fff', color: '#fff' }}>الغرفة الخاصة</button>
-        <button onClick={handleLogout} style={{ ...navButtonStyle, borderColor: '#ef4444', color: '#ef4444' }}>تسجيل الخروج</button>
+    <div className="main-container">
+      <nav className="nav-bar">
+        <button className="nav-btn" onClick={() => setCurrentPage('HOME')}>الرئيسية</button>
+        <button className="nav-btn" onClick={() => setCurrentPage('SECTIONS')}>الأقسام</button>
+        <button className="nav-btn" onClick={() => setCurrentPage('DASHBOARD')}>لوحة التحكم</button>
+        <button className="nav-btn" onClick={() => setCurrentPage('ABOUT')}>عن أناقة CHIC</button>
+        <button className="nav-btn owner-btn" onClick={() => setShowOwnerRoom(true)}>الغرفة الخاصة</button>
+        <button className="nav-btn logout-btn" onClick={handleLogout}>تسجيل الخروج</button>
       </nav>
 
       <main>
@@ -65,16 +54,3 @@ export default function App() {
     </div>
   );
 }
-
-const navButtonStyle: React.CSSProperties = {
-  background: 'transparent',
-  border: '1px solid #d4af37',
-  color: '#d4af37',
-  cursor: 'pointer',
-  padding: '8px 16px',
-  borderRadius: '8px',
-  fontSize: '0.9rem',
-  fontWeight: 'bold',
-  transition: 'all 0.3s ease',
-  margin: '5px'
-};
