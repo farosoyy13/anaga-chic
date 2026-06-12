@@ -7,7 +7,8 @@ import Sections from './Sections';
 import Login from './Login';
 import MainDashboard from './MainDashboard';
 import OwnerRoom from './OwnerRoom';
-import './App.css'; // تأكد من هذا السطر!
+// تم تحديث المسار هنا ليطابق مكان الملف الجديد
+import './components/App.css'; 
 
 export default function App() {
   const [user, setUser] = useState<any>(null);
@@ -25,7 +26,12 @@ export default function App() {
 
   const handleLogout = async () => {
     if (window.confirm("فمان الله وحافظك الله ولا تنسى صلاتك وأذكارك، زورنا مرة أخرى ولا تقاطعنا ❤️")) {
-      try { await signOut(auth); window.location.reload(); } catch (error) { console.error(error); }
+      try { 
+        await signOut(auth); 
+        window.location.reload(); 
+      } catch (error) { 
+        console.error("خطأ أثناء تسجيل الخروج:", error); 
+      }
     }
   };
 
