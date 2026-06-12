@@ -1,61 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { auth } from './firebaseconfig';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import Home from './Home';
-import About from './About';
-import Sections from './Sections';
+import React, { useState } from 'react';
 import Login from './Login';
-import MainDashboard from './MainDashboard';
-import OwnerRoom from './OwnerRoom';
-// تم تحديث المسار هنا ليطابق مكان الملف الجديد
+import Home from './Home';
+import Sections from './Sections';
+import Haraj from './Haraj';
+import About from './About';
 import './components/App.css'; 
 
 export default function App() {
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState('HOME');
-  const [showOwnerRoom, setShowOwnerRoom] = useState(false);
+  const [currentPage, setCurrentPage] = useState('LOGIN');
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-    });
-    return () => unsubscribe();
-  }, []);
-
-  const handleLogout = async () => {
-    if (window.confirm("فمان الله وحافظك الله ولا تنسى صلاتك وأذكارك، زورنا مرة أخرى ولا تقاطعنا ❤️")) {
-      try { 
-        await signOut(auth); 
-        window.location.reload(); 
-      } catch (error) { 
-        console.error("خطأ أثناء تسجيل الخروج:", error); 
-      }
-    }
+  // نظام التنقل الملكي الثابت
+  const navigate = (page: string) => {
+    setCurrentPage(page);
   };
-
-  if (loading) return <div className="loading-screen">جاري التحقق من الهوية الملكية...</div>;
-  if (!user) return <Login />;
-  if (showOwnerRoom) return <OwnerRoom onClose={() => setShowOwnerRoom(false)} />;
 
   return (
     <div className="main-container">
-      <nav className="nav-bar">
-        <button className="nav-btn" onClick={() => setCurrentPage('HOME')}>الرئيسية</button>
-        <button className="nav-btn" onClick={() => setCurrentPage('SECTIONS')}>الأقسام</button>
-        <button className="nav-btn" onClick={() => setCurrentPage('DASHBOARD')}>لوحة التحكم</button>
-        <button className="nav-btn" onClick={() => setCurrentPage('ABOUT')}>عن أناقة CHIC</button>
-        <button className="nav-btn owner-btn" onClick={() => setShowOwnerRoom(true)}>الغرفة الخاصة</button>
-        <button className="nav-btn logout-btn" onClick={handleLogout}>تسجيل الخروج</button>
-      </nav>
+      {/* عرض الصفحة بناءً على الحالة الحالية بدون إعادة تحميل */}
+      {currentPage === 'LOGIN' && <Login onLoginSuccess={() => navigate('HOME')} />}
+      
+      {currentPage !== 'LOGIN' && (
+        <>
+          <nav className="nav-bar">
+            <button onClick={() => navigate('HOME')}>الرئيسية</button>
+            <button onClick={() => navigate('SECTIONS')}>الأقسام</button>
+            <button onClick={() => navigate('HARAJ')}>منصة الإعلانات</button>
+            <button onClick={() => navigate('ABOUT')}>عن أناقة CHIC</button>
+          </nav>
 
-      <main>
-        {currentPage === 'HOME' && <Home />}
-        {currentPage === 'SECTIONS' && <Sections />}
-        {currentPage === 'DASHBOARD' && <MainDashboard />}
-        {currentPage === 'ABOUT' && <About />}
-      </main>
+          <main className="content-area">
+            {currentPage === 'HOME' && <Home onNavigate={navigate} />}
+            {currentPage === 'SECTIONS' && <Sections onNavigate={navigate} />}
+            {currentPage === 'HARAJ' && <Haraj />}
+            {currentPage === 'ABOUT' && <About />}
+          </main>
+        </>
+      )}
     </div>
   );
 }
