@@ -1,83 +1,60 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-export default function Sections() {
-  const [showOrderForm, setShowOrderForm] = useState(false);
+interface SectionsProps {
+  onNavigate: (page: string) => void;
+}
 
-  const ImageWithPulse = ({ src, alt }: { src: string; alt: string }) => (
-    <img 
-      src={src} 
-      alt={alt} 
-      style={{ 
-        width: '100%', 
-        borderRadius: '15px', 
-        border: '2px solid #d4af37',
-        boxShadow: '0 0 15px #d4af37',
-        marginTop: '10px'
-      }} 
-    />
-  );
-
+export default function Sections({ onNavigate }: SectionsProps) {
   return (
-    <div style={{ background: '#000', color: '#d4af37', padding: '20px', fontFamily: 'Cairo, sans-serif' }}>
-      <h2 style={{ textAlign: 'center', color: '#fff' }}>أقسام أناقة CHIC الملكية</h2>
+    <div style={sectionsContainerStyle}>
+      <h2 style={titleStyle}>أقسام أناقة CHIC</h2>
+      <p style={subtitleStyle}>تصفح المجموعات المختارة بعناية من قبل صاحب الموقع</p>
       
-      {/* زر نظام الطلب المخصص */}
-      <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-        <button 
-          onClick={() => setShowOrderForm(!showOrderForm)}
-          style={{ 
-            background: 'linear-gradient(45deg, #bf953f, #fcf6ba)', 
-            color: '#000', 
-            padding: '15px 25px', 
-            border: 'none', 
-            borderRadius: '10px', 
-            fontWeight: 'bold', 
-            cursor: 'pointer' 
-          }}
-        >
-          {showOrderForm ? 'إغلاق الطلب المخصص' : 'طلب تصميم خاص (تفصيل ملكي)'}
-        </button>
+      <div style={gridStyle}>
+        <button onClick={() => onNavigate('HOME')} style={btnStyle}>فساتين فخمة</button>
+        <button onClick={() => onNavigate('HOME')} style={btnStyle}>شنط ماركة</button>
+        <button onClick={() => onNavigate('HOME')} style={btnStyle}>الجيل الذهبي</button>
+        <button onClick={() => onNavigate('HOME')} style={btnStyle}>عبايات فخمة</button>
       </div>
 
-      {/* نموذج الطلب المخصص */}
-      {showOrderForm && (
-        <div style={{ border: '2px solid #d4af37', padding: '20px', borderRadius: '15px', marginBottom: '30px', background: '#1a1a1a' }}>
-          <h3 style={{ color: '#fff', textAlign: 'center' }}>نموذج الطلب الملكي</h3>
-          <input type="text" placeholder="الاسم الكريم" style={{ width: '100%', padding: '10px', marginBottom: '10px', borderRadius: '5px' }} />
-          <textarea placeholder="وصف التصميم المطلوب..." style={{ width: '100%', padding: '10px', height: '100px', borderRadius: '5px', marginBottom: '10px' }} />
-          <button style={{ width: '100%', background: '#d4af37', border: 'none', padding: '10px', borderRadius: '5px', fontWeight: 'bold', cursor: 'pointer' }}>
-            إرسال الطلب عبر واتساب
-          </button>
-        </div>
-      )}
-
-      {/* الأقسام الأساسية */}
-      <section style={{ marginBottom: '40px', borderBottom: '1px solid #d4af37', paddingBottom: '20px' }}>
-        <h2 style={{ color: '#fff' }}>أناقة العبايات والفساتين</h2>
-        <p>تشكيلة مختارة بعناية من أفخم الأقمشة العالمية.</p>
-        <ImageWithPulse src="رابط_صورة_العباية" alt="عباية ملكية" />
-      </section>
-
-      <section style={{ marginBottom: '40px', borderBottom: '1px solid #d4af37', paddingBottom: '20px' }}>
-        <h2 style={{ color: '#fff' }}>الجيل الذهبي (للأمهات)</h2>
-        <p>جلاليب وبراقع تجمع بين الأصالة والوقار.</p>
-        <ImageWithPulse src="رابط_صورة_الجلابية" alt="جلابية ملكية" />
-      </section>
-
-      <section style={{ marginBottom: '40px', borderBottom: '1px solid #d4af37', paddingBottom: '20px' }}>
-        <h2 style={{ color: '#fff' }}>فخامة الإكسسوارات</h2>
-        <p>لمسات نهائية من الشنط الراقية.</p>
-        <ImageWithPulse src="رابط_صورة_الشنطة" alt="شنطة فاخرة" />
-      </section>
-
-      <section style={{ marginBottom: '40px', background: '#1a1a1a', padding: '20px', borderRadius: '15px' }}>
-        <h2 style={{ color: '#fff' }}>خدماتنا</h2>
-        <ul style={{ listStyleType: 'none', padding: 0, lineHeight: '2' }}>
-          <li>✓ شحن سريع ومؤمن لجميع مناطق المملكة.</li>
-          <li>✓ ضمان استرجاع ذهبي.</li>
-          <li>✓ متابعة فورية للطلب عبر واتساب.</li>
-        </ul>
-      </section>
+      <button onClick={() => onNavigate('HOME')} style={backBtnStyle}>
+        العودة للرئيسية
+      </button>
     </div>
   );
 }
+
+const sectionsContainerStyle: React.CSSProperties = {
+  padding: '20px',
+  textAlign: 'center',
+  color: '#d4af37',
+  fontFamily: 'serif'
+};
+
+const titleStyle: React.CSSProperties = { fontSize: '2rem', marginBottom: '10px' };
+const subtitleStyle: React.CSSProperties = { fontSize: '0.9rem', marginBottom: '20px', color: '#aaa' };
+
+const gridStyle: React.CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  gap: '15px',
+  marginBottom: '30px'
+};
+
+const btnStyle: React.CSSProperties = {
+  padding: '15px',
+  background: '#111',
+  border: '1px solid #d4af37',
+  color: '#d4af37',
+  borderRadius: '8px',
+  cursor: 'pointer'
+};
+
+const backBtnStyle: React.CSSProperties = {
+  padding: '10px 20px',
+  background: 'transparent',
+  border: '1px solid #fff',
+  color: '#fff',
+  borderRadius: '5px',
+  cursor: 'pointer'
+};
