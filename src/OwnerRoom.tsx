@@ -81,4 +81,8 @@ export default function OwnerRoom({ onClose }: OwnerRoomProps) {
           <MdSecurity size={30}/> <br/> الحماية الصارمة <div style={descStyle}>كشف محاولات التسلل والهاكرز</div>
         </div>
         <div style={boxStyle}>
-          <FaSirenOn size={30}/> <br/> إنذار سريع <div style={descStyle}>زر طوارئ — تغيير كلمة مر
+          <FaSirenOn size={30}/> <br/> إنذار سريع <div style={descStyle}>زر طوارئ — تغيير كلمة مرور المالك فوراً</div>
+        </div>
+      </div>
+
+      {/*
