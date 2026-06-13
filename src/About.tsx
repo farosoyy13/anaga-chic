@@ -1,62 +1,77 @@
-import React from 'react';
-import { Mail, Phone, Building, ShieldCheck, Award } from 'lucide-react';
 
-export default function About() {
+import { FaWhatsapp, FaSnapchatGhost } from "react-icons/fa";
+import { MdEmail, MdPhone, MdAccountBalance } from "react-icons/md";
+
+export default function Contact() {
   return (
-    <div style={containerStyle}>
-      {/* رأس الصفحة السيادي */}
-      <div style={headerSectionStyle}>
-        <h1 style={titleStyle}>صاحب أناقة CHIC</h1>
-        <p style={nameStyle}>البروفيسور فهد بن حمود بن فهد الشمري</p>
-        <span style={roleStyle}>رائد الأعمال والمؤسس</span>
+    <div style={{ maxWidth: 700, margin: "0 auto", marginTop: 25, color: "#3d2714", fontFamily: "serif", padding: 14 }}>
+      <h2 style={{ color: "#cf9f2b", fontWeight: 900, fontSize: 32 }}>اتصل بي مباشرة 👑</h2>
+      
+      <div style={{ fontSize: 22, margin: "17px 0" }}>
+        <MdPhone style={{ color: "#43a047", fontSize: 28, marginLeft: 6, verticalAlign: "middle" }} />
+        <b>جوال مباشر:</b>
+        <a href="tel:00966536667222" style={{ color: "#113f07", margin: "0 12px", textDecoration: "underline" }}>
+          00966536667222
+        </a>
+        <a href="tel:00966507882771" style={{ color: "#113f07", margin: "0 12px", textDecoration: "underline" }}>
+          00966507882771
+        </a>
+      </div>
+      
+      <div style={{ fontSize: 20, margin: "8px 0" }}>
+        <FaWhatsapp style={{ color: "#25d366", fontSize: 28, marginLeft: 7, verticalAlign: "middle" }} />
+        واتساب مباشر:
+        <a
+          href="https://wa.me/966536667222"
+          target="_blank"
+          style={{ color: "#006e3c", fontWeight: 700, marginLeft: 10, textDecoration: "underline" }}
+        >
+          تحدث للمالك مباشرة
+        </a>
+      </div>
+      
+      <div style={{ fontSize: 20, margin: "8px 0" }}>
+        <FaSnapchatGhost style={{ color: "#ffeb3b", fontSize: 28, marginLeft: 5, verticalAlign: "middle" }} />
+        سناب شات:
+        <a
+          href="https://snapchat.com/t/HPkkIfUp"
+          target="_blank"
+          style={{ color: "#cfa426", fontWeight: 700, marginLeft: 10, textDecoration: "underline" }}
+        >
+          pmp.u
+        </a>
       </div>
 
-      {/* قسم الشراكات الموثوقة */}
-      <div style={sectionStyle}>
-        <h3 style={sectionTitleStyle}><Award size={20} /> شركاء الاستراتيجية الملكية</h3>
-        <div style={partnerListStyle}>
-          <p>• الشركاء العالميون: Global Luxury Partners | Tech Innovators Corp</p>
-          <p>• الشركاء السعوديون: Saudi Excellence Group | National Elegance Hub</p>
-        </div>
+      <div style={{ fontSize: 19, margin: "8px 0 14px 0" }}>
+        <MdEmail style={{ color: "#943b00", fontSize: 25, marginLeft: 7, verticalAlign: "middle" }} />
+        البريد الإلكتروني:
+        <a
+          href="mailto:kal6667222@gmail.com"
+          style={{ color: "#5d3222", fontWeight: 800, marginLeft: 10, textDecoration: "underline" }}
+        >
+          kal6667222@gmail.com
+        </a>
       </div>
 
-      {/* منطقة المعلومات الرسمية */}
-      <div style={footerStyle}>
-        <div style={contactBlockStyle}>
-          <h3 style={sectionTitleStyle}><Phone size={20} /> قنوات التواصل الرسمية</h3>
-          <p>📞 00966536667222 | 00966507882771</p>
-          <p>👻 سناب شات: pmp.u</p>
-          <p>📧 البريد: kal6667222@gmail.com</p>
-        </div>
-
-        <div style={contactBlockStyle}>
-          <h3 style={sectionTitleStyle}><Building size={20} /> المركز الرئيسي</h3>
-          <p>حفر الباطن، طريق الملك فهد</p>
-        </div>
-
-        {/* قسم البنك المحصن */}
-        <div style={bankSectionStyle}>
-          <h3 style={sectionTitleStyle}><ShieldCheck size={20} /> البيانات البنكية المعتمدة</h3>
-          <p><strong>مصرف الراجحي:</strong> SA0980000509608010069017</p>
-          <p><strong>البنك العربي:</strong> SA9830400108088851870011</p>
-        </div>
+      <div style={{
+        fontSize: 19, color: "#205688", background: "#faf9eb", borderRadius: 13, padding: "18px", margin: "22px 0", border: "1px dashed #d0b06b"
+      }}>
+        <h3 style={{ color: "#a08740" }}>🔒 الحسابات البنكية الرسمية للموقع:</h3>
+        <b>بنك الراجحي:</b> <br /> 
+        الآيبان: <span style={{ direction: "ltr", userSelect: "all", fontWeight: 800 }}>SA0980000509608010069017</span> <br />
+        الحساب تحويل محلي: <span style={{ direction: "ltr", userSelect: "all" }}>09608010069017</span>
+        <br /><br />
+        <b>بنك العربي:</b> <br />
+        الآيبان: <span style={{ direction: "ltr", userSelect: "all", fontWeight: 800 }}>SA9830400108088851870011</span> <br />
+        الحساب تحويل محلي: <span style={{ direction: "ltr", userSelect: "all" }}>0108088851870011</span>
       </div>
 
-      <p style={copyrightStyle}>© 2026 أناقة CHIC - جميع الحقوق محفوظة للبروفيسور فهد بن حمود الشمري</p>
+      <hr />
+      <div style={{color:"#a01d0a", background:"#f5e1ef", borderRadius:12, padding: "8px 16px", fontWeight:'bold', margin:"14px 0 9px 0"}}>
+        <b>تنبيه مهم:</b>
+        جميع بيانات التواصل والحسابات البنكية في هذه الصفحة رسمية وحقيقية، وأي وسيلة أو جهة أخرى خارج هذه الصفحة تعتبر مزيفة أو غير معتمدة. 
+        الرجاء الانتباه والالتزام.
+      </div>
     </div>
-  );
+  )
 }
-
-// التنسيقات الفاخرة والثابتة
-const containerStyle: React.CSSProperties = { background: '#050505', color: '#d4af37', height: '100vh', padding: '20px', fontFamily: 'serif', overflowY: 'auto' };
-const headerSectionStyle: React.CSSProperties = { textAlign: 'center', marginBottom: '30px', borderBottom: '1px solid #d4af37', paddingBottom: '20px' };
-const titleStyle: React.CSSProperties = { fontSize: '1.2rem', color: '#fff', textTransform: 'uppercase', letterSpacing: '2px' };
-const nameStyle: React.CSSProperties = { fontSize: '1.5rem', fontWeight: 'bold', margin: '5px 0' };
-const roleStyle: React.CSSProperties = { fontSize: '0.9rem', color: '#d4af37' };
-const sectionStyle: React.CSSProperties = { textAlign: 'center', marginBottom: '30px', background: '#0a0a0a', padding: '15px', borderRadius: '10px' };
-const sectionTitleStyle: React.CSSProperties = { color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '10px' };
-const partnerListStyle: React.CSSProperties = { fontSize: '0.85rem', color: '#d4af37' };
-const footerStyle: React.CSSProperties = { borderTop: '2px solid #d4af37', paddingTop: '20px' };
-const contactBlockStyle: React.CSSProperties = { marginBottom: '20px', fontSize: '0.9rem' };
-const bankSectionStyle: React.CSSProperties = { background: '#111', padding: '15px', borderRadius: '10px', fontSize: '0.85rem' };
-const copyrightStyle: React.CSSProperties = { textAlign: 'center', marginTop: '30px', fontSize: '0.75rem', color: '#555' };
