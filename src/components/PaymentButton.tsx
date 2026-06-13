@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import RoyalButton from "./RoyalButton";
 import { FaApplePay, FaCcMastercard, FaCcVisa, FaWhatsapp } from "react-icons/fa";
 
-export default function PaymentButton({ productName, price }: {
-  productName: string, price: number | string
-}) {
+// تعريف واجهة الخصائص (Props)
+interface PaymentButtonProps {
+  productName: string;
+  price: number | string;
+}
+
+export default function PaymentButton({ productName, price }: PaymentButtonProps) {
   const [open, setOpen] = useState(false);
 
   const accounts = [
@@ -95,45 +99,4 @@ export default function PaymentButton({ productName, price }: {
               marginTop: 8,
             }}
           >
-            متوفر لدينا خيارات <span style={{ fontWeight: 900 }}>تمارا</span> و{" "}
-            <span style={{ fontWeight: 900 }}>تابي</span> (قسّط الآن بسهولة)!
-          </div>
-
-          <div
-            style={{
-              marginTop: 13,
-              fontSize: 14,
-              color: "#777",
-              textAlign: "center",
-            }}
-          >
-            جميع الحسابات رسمية باسم <b>أناقة CHIC</b> / أي دفع غير ذلك نبرأ
-            منه.
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-const copyBtn: React.CSSProperties = {
-  margin: "0 5px",
-  background: "#f8e7b6",
-  color: "#584b13",
-  border: "1.1px solid #dab928",
-  borderRadius: 4,
-  fontSize: 12,
-  padding: "2px 8px",
-  cursor: "pointer",
-};
-
-const whatsBtn: React.CSSProperties = {
-  background: "#7fffa5",
-  color: "#016e2f",
-  fontWeight: 800,
-  border: "none",
-  borderRadius: 4,
-  fontSize: 14,
-  marginLeft: 7,
-  padding: "2px 9px",
-};
+            متوفر لدينا خيارات <span style={{ fontWeight: 900 }}>تمارا</span>
