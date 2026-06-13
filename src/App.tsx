@@ -4,8 +4,8 @@ import Home from './Home';
 import Sections from './Sections';
 import Haraj from './Haraj';
 import About from './About';
-import AdminDashboard from './AdminDashboard'; // غرفة الملك
-import ProductiveFamilies from './ProductiveFamilies'; // الأسر المنتجة (أضف الملف عندك)
+import AdminDashboard from './AdminDashboard';
+import ProductiveFamilies from './ProductiveFamilies';
 import './App.css';
 import { auth } from './firebaseconfig';
 
