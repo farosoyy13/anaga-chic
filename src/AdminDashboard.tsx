@@ -2,6 +2,7 @@ tsx
 import React, { useEffect, useState } from 'react';
 import { auth } from './firebaseconfig';
 import { useNavigate } from 'react-router-dom';
+import Notifications from './components/Notifications';
 import { FaUsers, FaUserShield, FaEye, FaChartBar, FaSirenOn, FaWhatsapp } from "react-icons/fa";
 import { MdSecurity, MdNotificationsActive, MdMail } from "react-icons/md";
 
@@ -66,11 +67,15 @@ export default function AdminDashboard() {
         </p>
       </header>
 
+      {/* إشعارات الأحداث الملكية الحية */}
+      <Notifications onlyOwner={true} />
+
       {/* الصلاحيات الملكية */}
       <section style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
         gap: '28px',
+        marginTop: '35px'
       }}>
         {/* إدارة المستخدمين */}
         <div style={boxStyle}>
