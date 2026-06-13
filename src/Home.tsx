@@ -1,4 +1,3 @@
-tsx
 import React, { useState } from 'react';
 import OwnerRoom from './OwnerRoom';
 import Haraj from './Haraj';
