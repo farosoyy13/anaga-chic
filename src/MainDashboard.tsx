@@ -2,11 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Shield, Sparkles, Send, Users, Eye, CloudRain, Zap, Gift, MessageSquare, Target } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import OwnerRoom from './OwnerRoom'; // استيراد الغرفة الخاصة للربط
+import OwnerRoom from './OwnerRoom';
 
-export default function MainDashboard() {
+// تعريف واجهة الخصائص (Props)
+interface MainDashboardProps {
+  onClose?: () => void;
+}
+
+export default function MainDashboard({ onClose }: MainDashboardProps) {
   const [isCurtainOpen, setIsCurtainOpen] = useState(false);
-  const [showOwnerRoom, setShowOwnerRoom] = useState(false); // الحالة لفتح الغرفة
+  const [showOwnerRoom, setShowOwnerRoom] = useState(false);
   const [publicMessages, setPublicMessages] = useState<any[]>([]);
   const [inputText, setInputText] = useState("");
   const endRef = useRef<HTMLDivElement>(null);
@@ -62,46 +67,4 @@ export default function MainDashboard() {
       </AnimatePresence>
 
       <header className="p-6 border-b border-amber-900/30 flex justify-between items-center">
-        <h1 className="text-2xl font-black text-amber-500 flex items-center gap-2"><Sparkles /> أناقة CHIC</h1>
-      </header>
-
-      <main className="p-4 max-w-4xl mx-auto space-y-8">
-        <div className="bg-slate-900/50 p-8 rounded-3xl border border-amber-500/20">
-          <h2 className="text-xl font-bold mb-6 text-amber-400">لوحة التحكم الملكية</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <ActionButton icon={Zap} title="النبض الذهبي" desc="تفعيل توهج النبضات الملكية للمنتجات" onClick={triggerGoldenPulse} />
-            <ActionButton icon={CloudRain} title="رادار الطقس" desc="قراءة طقس مدينتك وتلوين المتجر ذكياً" />
-            <ActionButton icon={Gift} title="كشط الخصم" desc="كشط الشاشة الرقمية لإظهار هديتك" />
-            {/* تم ربط رادار المالك بالغرفة الخاصة */}
-            <ActionButton icon={Shield} title="رادار المالك" desc="دخول غرفة التحكم السيادية الخاصة بك" onClick={() => setShowOwnerRoom(true)} />
-            <ActionButton icon={MessageSquare} title="كبسولة السوالف" desc="تفعيل المحادثات التفاعلية لزيادة الحيوية" />
-            <ActionButton icon={Target} title="محدد الأناقة" desc="تحديد اتجاهات الموضة العالمية في موقعك" />
-            <ActionButton icon={Eye} title="الوضع الخفي" desc="إخفاء لوحة التحكم عن الزوار العاديين" />
-            <ActionButton icon={Sparkles} title="الجاذبية" desc="جعل صور المنتجات تطفو بلمسة ملكية" />
-          </div>
-        </div>
-
-        <div className="bg-slate-900/50 p-6 rounded-3xl border border-amber-500/20 backdrop-blur-xl">
-          <h2 className="text-xl font-bold mb-4 flex items-center gap-2"><Users className="text-amber-500" /> المجلس العام للملكيات</h2>
-          <div className="h-64 overflow-y-auto space-y-3">
-            {publicMessages.map(msg => (
-              <div key={msg.id} className="bg-black/40 p-3 rounded-xl text-sm border border-slate-800">
-                <span className="text-amber-400 font-bold">{msg.senderName}: </span>{msg.text}
-              </div>
-            ))}
-            <div ref={endRef} />
-          </div>
-          <form onSubmit={sendPublicMessage} className="mt-4 flex gap-2">
-            <input 
-              value={inputText} 
-              onChange={(e) => setInputText(e.target.value)}
-              className="flex-1 bg-black p-3 rounded-xl border border-slate-700 focus:border-amber-500 outline-none"
-              placeholder="اكتب رسالتك للملكات..."
-            />
-            <button className="bg-amber-500 text-black px-6 rounded-xl font-bold"><Send size={18} /></button>
-          </form>
-        </div>
-      </main>
-    </div>
-  );
-}
+        <h1 className="text-2xl font-black text-amber-500 flex items-center gap-2"><Spark
