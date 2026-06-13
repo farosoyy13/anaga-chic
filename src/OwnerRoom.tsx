@@ -1,4 +1,3 @@
-tsx
 import React from 'react';
 import { FaCrown, FaUsers, FaUserShield, FaEye, FaChartBar, FaSirenOn } from "react-icons/fa";
 import { MdSecurity, MdNotificationsActive, MdMail } from "react-icons/md";
