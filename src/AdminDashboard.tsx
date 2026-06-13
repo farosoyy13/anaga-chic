@@ -1,4 +1,3 @@
-tsx
 import React, { useEffect, useState } from 'react';
 import { auth } from './firebaseconfig';
 import { useNavigate } from 'react-router-dom';
