@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import RoyalButton from "./RoyalButton";
-import { FaApplePay, FaCcMastercard, FaCcVisa, FaMoneyCheck, FaWhatsapp } from "react-icons/fa";
+import { FaApplePay, FaCcMastercard, FaCcVisa, FaWhatsapp } from "react-icons/fa";
 
 export default function PaymentButton({ productName, price }: {
   productName: string, price: number | string
