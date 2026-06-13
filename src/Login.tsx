@@ -1,11 +1,25 @@
-tsx
+```tsx
 import React, { useState } from "react";
-import { Crown, ShieldCheck, User, Sparkles } from "lucide-react";
+import { Crown, ShieldCheck, Sparkles } from "lucide-react";
 import LoginForm from "./LoginForm";
 
-// الرسائل التوعوية فوق اسم الموقع
+// رسالة الحماية الملكية الواضحة
+const securityNote = (
+  <div style={{
+    background: "#d4af37", color: "#000", fontWeight: 900, fontSize: "1.14rem",
+    borderRadius: 10, padding: "17px 19px", margin: "22px auto 28px auto", textAlign: "center", maxWidth: 550,
+    border: "2px solid #b59b24", boxShadow: "0 2px 11px #bba33f33"
+  }}>
+    🚨 <span>موقع <b>أناقة CHIC</b> يمتلك نظام حماية تقني شديد القوة، وخصوصية <b>جميع المستخدمين</b> خط أحمر…  
+      لا يمكن لأي شخص أو جهة الاطلاع أو الوصول على أي معلومة تخصهم حتى صاحب الموقع يرى فقط ما يحتاجه من أجل حمايتهم.<br />
+      جميع بياناتك <b>مشفرة بالكامل</b> وتمتثل لأعلى معايير الأمان الرقمي. أي محاولة تهكير أو تسلل يتم كشفها لحظياً وإغلاقها فورًا وتنبيه الإدارة.
+    </span>
+  </div>
+);
+
+// الرسائل التوعوية أعلى اسم الموقع
 const topAdvice = (
-  <div style={{ marginBottom: 18, textAlign: "center" }}>
+  <div style={{ marginBottom: 16, textAlign: "center" }}>
     <div style={{
       fontSize: "2.6rem", fontWeight: 900,
       letterSpacing: 3, color: "#d4af37", textShadow: "0 0 24px #ab8e2f"
@@ -28,36 +42,36 @@ const wrapperStyle: React.CSSProperties = {
   justifyContent: "center", overflow: "hidden", fontFamily: "serif"
 };
 const cardsContainerStyle: React.CSSProperties = {
-  display: "flex", flexDirection: "row", gap: "30px"
+  display: "flex", flexDirection: "row", gap: "32px"
 };
 const cardBaseStyle: React.CSSProperties = {
-  minWidth: 220, minHeight: 142, maxWidth: 310,
+  minWidth: 235, minHeight: 149, maxWidth: 330,
   borderRadius: "15px", display: "flex", flexDirection: "column",
-  alignItems: "center", justifyContent: "center", boxShadow: "0 2px 22px #b79a348c",
+  alignItems: "center", justifyContent: "center", boxShadow: "0 2px 22px #b79a3496",
   cursor: "pointer", transition: "all 0.22s", fontWeight: 800, fontSize: "1rem"
 };
 
 export default function Login() {
-  const [openRole, setOpenRole] = useState<null | "OWNER" | "ADMIN" | "GUEST">(null);
+  const [openRole, setOpenRole] = useState<null | "OWNER" | "ADMIN">(null);
 
-  // عند نجاح الدخول، يمكنك هنا تحويله للداشبورد المناسب (برمجياً مستقبلاً)
+  // عند نجاح الدخول، يمكنك هنا تحويله للداشبورد المناسب
   const handleLoginSuccess = () => {
-    // مثال أولي (عدّل حسب التنقل المطلوب):
-    window.location.href = "/"; // أو استخدم React Router لاحقاً
+    window.location.href = "/"; // أو استخدم React Router عند الحاجة
   };
   // زر رجوع للواجهة الرئيسية
   const handleBack = () => setOpenRole(null);
 
-  // حالة تفعيل المربع الملكي في التصميم (تأثير بصري)
+  // حالة تفعيل المربع الملكي في التصميم
   const [hoverOwner, setHoverOwner] = useState(false);
 
   return (
     <div style={wrapperStyle}>
+      {securityNote}
       {topAdvice}
 
       {openRole === null ? (
         <>
-          {/* واجهة الدخول بثلاث مربعات */}
+          {/* مربعات الدخول */}
           <div style={cardsContainerStyle}>
             {/* صاحب الموقع */}
             <div
@@ -67,14 +81,14 @@ export default function Login() {
                   ? "0 0 44px 11px #d4af3799, 0 0 120px 35px #cbaa32a0"
                   : "0 0 16px 3px #cab36b75",
                 background: "linear-gradient(135deg,#fff9e3 70%,#d4af37 95%)",
-                transform: hoverOwner ? "scale(1.04)" : "scale(1)",
+                transform: hoverOwner ? "scale(1.05)" : "scale(1)",
                 border: "3px solid #d4af37", color: "#463108"
               }}
               onMouseEnter={() => setHoverOwner(true)}
               onMouseLeave={() => setHoverOwner(false)}
               onClick={() => setOpenRole("OWNER")}
             >
-              <div style={{ fontSize: 42, marginBottom: 6 }}>
+              <div style={{ fontSize: 44, marginBottom: 7 }}>
                 <Crown size={44} color="#d4af37" />
                 <span style={{
                   marginLeft: 9, color: "#b89c41",
@@ -82,7 +96,7 @@ export default function Login() {
                 }}>صاحب الموقع</span>
               </div>
               <div style={{
-                fontWeight: 700, color: "#685324", fontSize: "1.13rem"
+                fontWeight: 700, color: "#685324", fontSize: "1.16rem"
               }}>
                 دخول أصحاب السلطة والقرارات <Sparkles size={18} />
               </div>
@@ -97,40 +111,23 @@ export default function Login() {
               }}
               onClick={() => setOpenRole("ADMIN")}
             >
-              <div style={{ fontSize: 35 }}>
-                <ShieldCheck size={33} color="#b6a836" />
-                <span style={{ marginLeft: 6 }}>المشرفين</span>
+              <div style={{ fontSize: 36 }}>
+                <ShieldCheck size={34} color="#b6a836" />
+                <span style={{ marginLeft: 7 }}>المشرفين</span>
               </div>
-              <div style={{ fontWeight: 600, color: "#857700", fontSize: "0.99rem" }}>
+              <div style={{ fontWeight: 600, color: "#857700", fontSize: "1.02rem" }}>
                 دخول حماية النظام
               </div>
             </div>
-            {/* الزوار */}
-            <div
-              style={{
-                ...cardBaseStyle,
-                background: "linear-gradient(135deg,#f4ede0 90%,#d5c176 100%)",
-                border: "2px solid #e4c870", color: "#75592a"
-              }}
-              onClick={() => setOpenRole("GUEST")}
-            >
-              <div style={{ fontSize: 27 }}>
-                <User size={30} color="#ceb76e" />
-                <span style={{ marginLeft: 3 }}>الزوار</span>
-              </div>
-              <div style={{ fontWeight: 600, color: "#aa9759", fontSize: "0.9rem" }}>
-                مشاهدة الجمال والمنتجات
-              </div>
-            </div>
           </div>
-          {/* تنبيه باللون الأحمر حول أهمية الايميل */}
+          {/* تنبيه حول أهمية الايميل */}
           <div style={{
             margin: "39px 0 0 0", fontSize: "0.99rem",
             color: "#ff2e1d", textAlign: "center", fontWeight: 700
           }}>
             ⚠️
             <span style={{ marginRight: 6 }}>
-              الرجاء التسجيل بالإيميل الصحيح، لن يتم استعادة كلمة المرور إلا عبر البريد الإلكتروني.
+              التسجيل فقط بحساب رسمي (بريد إلكتروني مفعل أو عبر Google)، لا يمكن لأي شخص دخول الموقع بدون تحقق البريد أو حساب جوجل فعّال. <b>لا توجد خاصية "زائر" نهائيًا - حماية كاملة لخصوصيتك.</b>
             </span>
           </div>
         </>
@@ -144,3 +141,4 @@ export default function Login() {
     </div>
   );
 }
+```
