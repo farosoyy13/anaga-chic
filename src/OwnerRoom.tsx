@@ -2,7 +2,12 @@ import React from 'react';
 import { FaCrown, FaUsers, FaUserShield, FaEye, FaChartBar, FaSirenOn } from "react-icons/fa";
 import { MdSecurity, MdNotificationsActive, MdMail } from "react-icons/md";
 
-export default function OwnerRoom() {
+// تعريف واجهة الخصائص (Props)
+interface OwnerRoomProps {
+  onClose?: () => void;
+}
+
+export default function OwnerRoom({ onClose }: OwnerRoomProps) {
   return (
     <div style={{
       maxWidth: "920px",
@@ -13,8 +18,35 @@ export default function OwnerRoom() {
       padding: "36px 24px",
       border: "4px solid #d4af37",
       fontFamily: "serif",
-      color: "#503c1a"
+      color: "#503c1a",
+      position: "relative"
     }}>
+      {/* زر الإغلاق */}
+      {onClose && (
+        <button
+          onClick={onClose}
+          style={{
+            position: "absolute",
+            top: "15px",
+            left: "15px",
+            background: "#d4af37",
+            color: "#000",
+            border: "none",
+            borderRadius: "50%",
+            width: "35px",
+            height: "35px",
+            fontSize: "18px",
+            fontWeight: "bold",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          ✕
+        </button>
+      )}
+
       <div style={{ display: "flex", alignItems: "center", gap: 18, marginBottom: 25 }}>
         <FaCrown size={37} style={{color:'#d4af37'}} />
         <h2 style={{ fontSize: 34, fontWeight: 800, margin: "0 0 5px 0" }}>
@@ -49,27 +81,4 @@ export default function OwnerRoom() {
           <MdSecurity size={30}/> <br/> الحماية الصارمة <div style={descStyle}>كشف محاولات التسلل والهاكرز</div>
         </div>
         <div style={boxStyle}>
-          <FaSirenOn size={30}/> <br/> إنذار سريع <div style={descStyle}>زر طوارئ — تغيير كلمة مرور المالك فوراً</div>
-        </div>
-      </div>
-      <div style={{ color: "#a01d0a", background: "#f8e1e5", margin:"40px 0 0 0",borderRadius:9,padding:"12px 19px",fontWeight:"bold",fontSize:"1.1rem"}}>
-        جميع الصلاحيات حصــرًا لصاحب الموقع فقط، ولا يراها أو يصل لها أي مستخدم أو مشرف.
-      </div>
-    </div>
-  );
-}
-
-const boxStyle: React.CSSProperties = {
-  background: "#fff9e7",
-  borderRadius: "12px",
-  padding: "27px 6px",
-  textAlign: "center",
-  fontWeight: 700,
-  fontSize: "1.07rem",
-  boxShadow: "0 2px 13px #cab97a33",
-  border: "2.3px solid #d4af37",
-  minHeight: 130
-};
-const descStyle: React.CSSProperties = {
-  color: "#94959c", fontSize: "0.98rem", fontWeight: 500, marginTop: 8
-};
+          <FaSirenOn size={30}/> <br/> إنذار سريع <div style={descStyle}>زر طوارئ — تغيير كلمة مر
