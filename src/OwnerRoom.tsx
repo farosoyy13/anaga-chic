@@ -1,70 +1,76 @@
-import React, { useEffect, useState } from 'react';
-import { db } from './firebaseconfig';
-import { collection, onSnapshot, query, doc, updateDoc, where } from 'firebase/firestore';
-import { X, Lock, Unlock, LayoutDashboard, MessageSquare, TrendingUp, ShieldAlert, Users, Database, Eye } from 'lucide-react';
+tsx
+import React from 'react';
+import { FaCrown, FaUsers, FaUserShield, FaEye, FaChartBar, FaSirenOn } from "react-icons/fa";
+import { MdSecurity, MdNotificationsActive, MdMail } from "react-icons/md";
 
-export default function OwnerRoom({ onClose }: { onClose: () => void }) {
-  const [blockedUsers, setBlockedUsers] = useState<any[]>([]);
-
-  useEffect(() => {
-    const q = query(collection(db, "users"), where("isBlocked", "==", true));
-    return onSnapshot(q, (snapshot) => {
-      setBlockedUsers(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-    });
-  }, []);
-
-  const unblockUser = async (userId: string) => {
-    await updateDoc(doc(db, "users", userId), { isBlocked: false, loginAttempts: 0 });
-    alert("تم استعادة صلاحية الوصول للمستخدم.");
-  };
-
-  const ownerTools = [
-    { icon: <LayoutDashboard />, label: 'إحصائيات الموقع', desc: 'مراقبة حركة الزوار ونشاط الموقع لحظياً.' },
-    { icon: <MessageSquare />, label: 'رسائل العملاء', desc: 'استعراض والرد على كافة تواصل العملاء.' },
-    { icon: <TrendingUp />, label: 'التقارير المالية', desc: 'متابعة حركة المبيعات والأرباح بدقة.' },
-    { icon: <ShieldAlert />, label: 'سجل الاختراقات', desc: 'كشف أي محاولات مشبوهة أو اختراق للمنصة.' },
-    { icon: <Database />, label: 'إدارة البيانات', desc: 'تعديل أو حذف أي منتج أو إعلان في الموقع.' },
-    { icon: <Eye />, label: 'وضع التخفي', desc: 'تصفح الموقع كزائر لمراقبة الجودة دون علم أحد.' }
-  ];
-
+export default function OwnerRoom() {
   return (
-    <div style={containerStyle}>
-      <div style={headerStyle}>
-        <h2 style={{ color: '#d4af37', fontSize: '1.6rem' }}>👑 مكتب المالك: البروفيسور فهد بن حمود بن فهد الشمري</h2>
-        <button onClick={onClose} style={closeBtnStyle}><X /></button>
+    <div style={{
+      maxWidth: "920px",
+      margin: "28px auto",
+      background: "#f8f1e0",
+      borderRadius: "22px",
+      boxShadow: "0 4px 32px #d7c27e55",
+      padding: "36px 24px",
+      border: "4px solid #d4af37",
+      fontFamily: "serif",
+      color: "#503c1a"
+    }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 18, marginBottom: 25 }}>
+        <FaCrown size={37} style={{color:'#d4af37'}} />
+        <h2 style={{ fontSize: 34, fontWeight: 800, margin: "0 0 5px 0" }}>
+          غرفة صاحب الموقع الملكية — الإدارة العليا
+        </h2>
       </div>
-
-      {/* لوحة الصلاحيات التعريفية */}
-      <div style={gridStyle}>
-        {ownerTools.map((tool, i) => (
-          <div key={i} style={cardStyle}>
-            {tool.icon}
-            <h3 style={{ fontSize: '0.9rem', margin: '10px 0' }}>{tool.label}</h3>
-            <p style={{ fontSize: '0.7rem', color: '#aaa' }}>{tool.desc}</p>
-          </div>
-        ))}
+      <div style={{ color: "#c39d36", fontWeight: 800, marginBottom: "17px" }}>
+        (هذه الغرفة لا يراها إلا أنت، وتحتوي كل الصلاحيات المطلقة في الموقع) 
       </div>
-
-      {/* منطقة السيطرة الأمنية */}
-      <div style={securitySectionStyle}>
-        <h3 style={{ color: '#ff4d4d', display: 'flex', alignItems: 'center', gap: '10px' }}><Lock /> السيطرة على المستخدمين:</h3>
-        {blockedUsers.map((user) => (
-          <div key={user.id} style={userRowStyle}>
-            <span>{user.email}</span>
-            <button onClick={() => unblockUser(user.id)} style={unblockBtnStyle}><Unlock size={14} /> منح الوصول</button>
-          </div>
-        ))}
+      
+      {/* قائمة الصلاحيات — نماذج أولية فقط */}
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:"30px"}}>
+        <div style={boxStyle}>
+          <FaUsers size={30} /> <br/> إدارة المستخدمين <div style={descStyle}>طرد - إرجاع - إصلاح - بحث</div>
+        </div>
+        <div style={boxStyle}>
+          <FaUserShield size={30} /> <br/> صلاحيات المشرفين <div style={descStyle}>ضبط/منح/إلغاء أي صلاحية</div>
+        </div>
+        <div style={boxStyle}>
+          <FaEye size={30} /> <br/> مراقبة الرسائل <div style={descStyle}>عرض جميع الرسائل الخاصة</div>
+        </div>
+        <div style={boxStyle}>
+          <MdNotificationsActive size={30} /> <br/> مركز الإشعارات <div style={descStyle}>جميع الأحداث — دعم فوري</div>
+        </div>
+        <div style={boxStyle}>
+          <FaChartBar size={30}/> <br/> إحصائيات وزوار <div style={descStyle}>تتبع حي — خريطة حرارية</div>
+        </div>
+        <div style={boxStyle}>
+          <MdMail size={30}/> <br/> تحكم بالبلاغات <div style={descStyle}>معالجة شكوى أي عضو</div>
+        </div>
+        <div style={boxStyle}>
+          <MdSecurity size={30}/> <br/> الحماية الصارمة <div style={descStyle}>كشف محاولات التسلل والهاكرز</div>
+        </div>
+        <div style={boxStyle}>
+          <FaSirenOn size={30}/> <br/> إنذار سريع <div style={descStyle}>زر طوارئ — تغيير كلمة مرور المالك فوراً</div>
+        </div>
+      </div>
+      <div style={{ color: "#a01d0a", background: "#f8e1e5", margin:"40px 0 0 0",borderRadius:9,padding:"12px 19px",fontWeight:"bold",fontSize:"1.1rem"}}>
+        جميع الصلاحيات حصــرًا لصاحب الموقع فقط، ولا يراها أو يصل لها أي مستخدم أو مشرف.
       </div>
     </div>
   );
 }
 
-// التنسيقات الملكية
-const containerStyle: React.CSSProperties = { background: '#050505', color: '#d4af37', height: '100vh', padding: '20px', fontFamily: 'serif', overflowY: 'auto' };
-const headerStyle: React.CSSProperties = { display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #d4af37', paddingBottom: '20px' };
-const gridStyle: React.CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '15px', marginTop: '20px' };
-const cardStyle: React.CSSProperties = { padding: '15px', border: '1px solid #d4af37', borderRadius: '10px', background: '#0a0a0a', textAlign: 'center' };
-const securitySectionStyle: React.CSSProperties = { background: '#0a0a0a', border: '1px solid #d4af37', padding: '20px', borderRadius: '15px', marginTop: '30px' };
-const userRowStyle: React.CSSProperties = { display: 'flex', justifyContent: 'space-between', padding: '10px', borderBottom: '1px solid #333', alignItems: 'center' };
-const unblockBtnStyle: React.CSSProperties = { background: '#d4af37', color: '#000', border: 'none', padding: '5px 10px', borderRadius: '3px', cursor: 'pointer', fontWeight: 'bold' };
-const closeBtnStyle: React.CSSProperties = { background: 'transparent', border: '1px solid #d4af37', color: '#d4af37', cursor: 'pointer', padding: '5px' };
+const boxStyle: React.CSSProperties = {
+  background: "#fff9e7",
+  borderRadius: "12px",
+  padding: "27px 6px",
+  textAlign: "center",
+  fontWeight: 700,
+  fontSize: "1.07rem",
+  boxShadow: "0 2px 13px #cab97a33",
+  border: "2.3px solid #d4af37",
+  minHeight: 130
+};
+const descStyle: React.CSSProperties = {
+  color: "#94959c", fontSize: "0.98rem", fontWeight: 500, marginTop: 8
+};
