@@ -1,11 +1,12 @@
 import React from 'react';
 
-interface Props {
-  text: string;
+interface RoyalButtonProps {
   onClick: () => void;
+  children: React.ReactNode;
+  style?: React.CSSProperties;
 }
 
-export default function RoyalButton({ text, onClick }: Props) {
+export default function RoyalButton({ onClick, children, style }: RoyalButtonProps) {
   return (
     <button
       onClick={onClick}
@@ -18,12 +19,13 @@ export default function RoyalButton({ text, onClick }: Props) {
         fontWeight: 'bold',
         cursor: 'pointer',
         boxShadow: '0 4px 15px rgba(212, 175, 55, 0.3)',
-        transition: 'transform 0.3s'
+        transition: 'transform 0.3s',
+        ...style
       }}
       onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
       onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
     >
-      {text}
+      {children}
     </button>
   );
 }
