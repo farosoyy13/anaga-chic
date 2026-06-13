@@ -1,9 +1,7 @@
-```tsx
 import React, { useState } from "react";
 import { Crown, ShieldCheck, Sparkles } from "lucide-react";
 import LoginForm from "./LoginForm";
 
-// رسالة الحماية الملكية الواضحة
 const securityNote = (
   <div style={{
     background: "#d4af37", color: "#000", fontWeight: 900, fontSize: "1.14rem",
@@ -17,7 +15,6 @@ const securityNote = (
   </div>
 );
 
-// الرسائل التوعوية أعلى اسم الموقع
 const topAdvice = (
   <div style={{ marginBottom: 16, textAlign: "center" }}>
     <div style={{
@@ -54,14 +51,11 @@ const cardBaseStyle: React.CSSProperties = {
 export default function Login() {
   const [openRole, setOpenRole] = useState<null | "OWNER" | "ADMIN">(null);
 
-  // عند نجاح الدخول، يمكنك هنا تحويله للداشبورد المناسب
   const handleLoginSuccess = () => {
-    window.location.href = "/"; // أو استخدم React Router عند الحاجة
+    window.location.href = "/";
   };
-  // زر رجوع للواجهة الرئيسية
   const handleBack = () => setOpenRole(null);
 
-  // حالة تفعيل المربع الملكي في التصميم
   const [hoverOwner, setHoverOwner] = useState(false);
 
   return (
@@ -71,9 +65,7 @@ export default function Login() {
 
       {openRole === null ? (
         <>
-          {/* مربعات الدخول */}
           <div style={cardsContainerStyle}>
-            {/* صاحب الموقع */}
             <div
               style={{
                 ...cardBaseStyle,
@@ -101,7 +93,6 @@ export default function Login() {
                 دخول أصحاب السلطة والقرارات <Sparkles size={18} />
               </div>
             </div>
-            {/* المشرفين */}
             <div
               style={{
                 ...cardBaseStyle,
@@ -120,7 +111,6 @@ export default function Login() {
               </div>
             </div>
           </div>
-          {/* تنبيه حول أهمية الايميل */}
           <div style={{
             margin: "39px 0 0 0", fontSize: "0.99rem",
             color: "#ff2e1d", textAlign: "center", fontWeight: 700
@@ -141,4 +131,3 @@ export default function Login() {
     </div>
   );
 }
-```
