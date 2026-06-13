@@ -5,10 +5,12 @@ import Home from './Home';
 import Sections from './Sections';
 import Haraj from './Haraj';
 import About from './About';
+import AdminDashboard from './AdminDashboard'; // غرفة الملك
+import ProductiveFamilies from './ProductiveFamilies'; // الأسر المنتجة (أضف الملف عندك)
 import './App.css';
 import { auth } from './firebaseconfig';
 
-// دوال تعقب الحالة الحية لتسجيل الدخول (Firebase)
+// ربط المستخدم الحالي ومتابعة دخوله
 function useAuthState() {
   const [user, setUser] = useState<any>(null);
 
@@ -20,44 +22,73 @@ function useAuthState() {
   return user;
 }
 
-// المكون الرئيسي للموقع
+// وضع زر غرفة الملك (يظهر فقط لصاحب الموقع)
+const isOwner = (user: any) => user && user.email === "kal6667222@gmail.com";
+
+// المكون الرئيسي
 export default function App() {
   const user = useAuthState();
   const [currentPage, setCurrentPage] = useState('LOGIN');
 
-  // عند تسجيل دخول ناجح، ينقل المستخدم مباشرة للصفحة الرئيسية
-  const handleLoginSuccess = () => {
-    setCurrentPage('HOME');
-  };
+  // عند تسجيل دخول ناجح، ينقل المستخدم للصفحة الرئيسية
+  const handleLoginSuccess = () => setCurrentPage('HOME');
 
-  // حماية: إذا خرج المستخدم أو لم يسجل دخول يرجع مباشرة لصفحة الدخول
+  // حماية: لا أحد يشاهد غير صفحة الدخول إلا المسجّل
   useEffect(() => {
-    if (!user) {
-      setCurrentPage('LOGIN');
-    }
+    if (!user) setCurrentPage('LOGIN');
   }, [user]);
 
-  // التحكم في التنقل
-  const navigate = (page: string) => {
-    setCurrentPage(page);
-  };
+  // التنقل بين الصفحات
+  const navigate = (page: string) => setCurrentPage(page);
 
   return (
     <div className="main-container">
-      {/* إذا لم يسجل الدخول */}
+
+      {/* إن لم يسجل الدخول */}
       {(!user || currentPage === 'LOGIN') && (
         <Login onLoginSuccess={handleLoginSuccess} />
       )}
 
-      {/* إذا سجل الدخول */}
+      {/* بعد تسجيل الدخول */}
       {user && currentPage !== 'LOGIN' && (
         <>
           <nav className="nav-bar">
             <button onClick={() => navigate('HOME')}>الرئيسية</button>
             <button onClick={() => navigate('SECTIONS')}>الأقسام</button>
             <button onClick={() => navigate('HARAJ')}>منصة الإعلانات</button>
+            <button onClick={() => navigate('PRODUCTIVE_FAMILIES')}>الأسر المنتجة</button>
             <button onClick={() => navigate('ABOUT')}>عن أناقة CHIC</button>
-            <button onClick={() => { auth.signOut(); }}>تسجيل الخروج</button>
+
+            {/* زر غرفة الملك (فقط لصاحب الموقع) */}
+            {isOwner(user) && (
+              <button
+                style={{
+                  background: "#d4af37",
+                  color: "#23210b",
+                  fontWeight: 900,
+                  borderRadius: 7,
+                  border: "none",
+                  margin: "0 0 0 8px"
+                }}
+                onClick={() => navigate('OWNER_ROOM')}
+              >
+                غرفة صاحب الموقع
+              </button>
+            )}
+
+            <button
+              style={{
+                background: "#b91c1c",
+                color: "#fff",
+                borderRadius: 7,
+                border: "none",
+                fontWeight: 700,
+                marginRight: 8
+              }}
+              onClick={() => { auth.signOut(); }}
+            >
+              تسجيل الخروج
+            </button>
           </nav>
 
           <main className="content-area">
@@ -69,6 +100,8 @@ export default function App() {
             )}
             {currentPage === 'HARAJ' && <Haraj />}
             {currentPage === 'ABOUT' && <About />}
+            {currentPage === 'PRODUCTIVE_FAMILIES' && <ProductiveFamilies />}
+            {currentPage === 'OWNER_ROOM' && isOwner(user) && <AdminDashboard />}
           </main>
         </>
       )}
