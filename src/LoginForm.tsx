@@ -2,11 +2,11 @@ tsx
 import React, { useState } from 'react';
 import { auth } from './firebaseconfig';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { Loader2, Lock } from 'lucide-react';
+import { Loader2, Lock, EyeOff } from 'lucide-react';
 
 interface Props {
   role: 'OWNER' | 'ADMIN' | 'GUEST';
-  onSuccess: () => void;
+  onSuccess: (stealth?: boolean) => void; // متغير خاص بوضع التخفي
   onBack: () => void;
 }
 
@@ -21,13 +21,19 @@ export default function LoginForm({ role, onSuccess, onBack }: Props) {
   const [pwd, setPwd] = useState('');
   const [msg, setMsg] = useState('');
   const [loading, setLoading] = useState(false);
+  const [stealth, setStealth] = useState(false); // حالة الدخول المخفي
 
   const handleLogin = async () => {
     if (!email || !pwd) { setMsg('يرجى تعبئة جميع الحقول.'); return; }
     setLoading(true); setMsg('');
     try {
       await signInWithEmailAndPassword(auth, email, pwd);
-      onSuccess();
+      // ننقل الحالة onSuccess (سواء كان دخول مخفي أو عادي)
+      if (role === "OWNER") {
+        onSuccess(stealth);
+      } else {
+        onSuccess();
+      }
     } catch (err: any) {
       setMsg('بيانات الاعتماد غير صحيحة.');
     }
@@ -68,6 +74,27 @@ export default function LoginForm({ role, onSuccess, onBack }: Props) {
           borderRadius: 6, border: "1.4px solid #f5d87d", fontFamily: "inherit"
         }}
       />
+
+      {/* مربع الدخول المخفي يظهر فقط لصاحب الموقع */}
+      {role === "OWNER" && (
+        <label style={{
+          display: "flex", alignItems: "center",
+          gap: 7, marginBottom: 13, color: "#6c5e2a",
+          fontWeight: 600, cursor: "pointer", fontSize: "1.02rem"
+        }}>
+          <input
+            type="checkbox"
+            checked={stealth}
+            onChange={e => setStealth(e.target.checked)}
+            style={{ accentColor: "#bfa246", width: 18, height: 18 }}
+          />
+          <EyeOff size={17} style={{ marginTop: -2 }} />
+          <span>
+            دخول مخفي (لن يظهر صوت أو شريط دخول لصاحب الموقع)
+          </span>
+        </label>
+      )}
+
       <button
         onClick={handleLogin}
         disabled={loading}
