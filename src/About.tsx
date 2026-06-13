@@ -1,4 +1,3 @@
-
 import { FaWhatsapp, FaSnapchatGhost } from "react-icons/fa";
 import { MdEmail, MdPhone, MdAccountBalance } from "react-icons/md";
 
