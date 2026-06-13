@@ -1,4 +1,3 @@
-tsx
 import React, { useState } from 'react';
 import { auth } from './firebaseconfig';
 import { signInWithEmailAndPassword } from "firebase/auth";
