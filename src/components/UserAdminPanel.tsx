@@ -1,4 +1,3 @@
-tsx
 import React, { useEffect, useState } from 'react';
 import { db, auth } from '../firebaseconfig';
 import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
